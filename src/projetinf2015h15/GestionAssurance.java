@@ -178,7 +178,7 @@ public class GestionAssurance {
     /**
      *
      * @author Groupe 15
-     * retourne la liste des dates des soins.
+     * retourne le montant du remboursement.
      * @param objet
      * @return
     */
@@ -214,15 +214,252 @@ public class GestionAssurance {
     /**
      *
      * @author Groupe 15
-     * retourne la liste des dates des soins.
-     * @param taux
+     * retourne le montant du remboursement.
+     * @param contrat
+     * @param numeroSoin
      * @param montant
-     * @return
+     * @return 
     */
-    public static String calculRemboursement(Double taux, String montant) {
-
+    public static double remboursement(char contrat,double numeroSoin, double montant) {
         
-        return null;
+        double remboursement = 0.00;
+        
+        if (numeroSoin == 0){
+            switch (contrat){
+                case 'A':
+                    remboursement = (montant * 25)/100;
+                break;
+                case 'B':
+                    remboursement = (montant * 50)/100;
+                        if (remboursement > 40){
+                            remboursement = 40;
+                        } 
+                break;
+                case 'C':
+                    remboursement = (montant * 90)/100;
+                break;
+                case 'D':
+                    remboursement = montant;
+                        if (remboursement > 85){
+                            remboursement = 85;
+                        }
+                break;
+            }
+        
+        }else if(numeroSoin == 100){
+            
+            switch (contrat){
+                case 'A':
+                    remboursement = (montant * 25)/100;
+                break;
+                case 'B':
+                    remboursement = (montant * 50)/100;
+                        if (remboursement > 50){
+                            remboursement = 50;
+                        }
+                break;
+                case 'C':
+                    remboursement = (montant * 90)/100;
+                break;
+                case 'D':
+                    remboursement = montant;
+                        if (remboursement > 75){
+                            remboursement = 75;
+                        }
+                break;
+                    
+            
+            }
+        
+        }else if(numeroSoin == 200){
+            
+                            
+            switch (contrat){
+                case 'A':
+                    remboursement = (montant * 25)/100;
+                break;
+                case 'B':
+                    remboursement = montant;
+                        if (remboursement > 70){
+                            remboursement = 70;
+                        }
+                break;
+                case 'C':
+                    remboursement = (montant * 90)/100;
+                break;
+                case 'D':
+                    remboursement = montant;
+                        if (remboursement > 100){
+                            remboursement = 100;
+                        }
+                
+                break;
+            }
+        
+        }else if(numeroSoin >= 300 && numeroSoin <= 399){
+            
+              switch (contrat){
+                case 'A':
+                    remboursement = 0;
+                break;
+                case 'B':
+                    remboursement = (montant * 50)/100;
+                break;
+                 
+                case 'C':
+                    remboursement = (montant * 90)/100;
+                break;
+                case 'D':
+                    remboursement = montant;  
+                break;
+              }
+        
+        }else if(numeroSoin == 400){
+            
+                        
+            switch (contrat){
+                case 'A':
+                    remboursement = 0;
+                break;
+                case 'B':
+                    remboursement = 0; 
+                break;
+                case 'C':
+                    remboursement = (montant * 90)/100;
+                break;
+                case 'D':
+                    remboursement = montant;
+                        if (remboursement > 65){
+                            remboursement = 65;
+                        }
+                break;
+                    
+            
+            }
+        
+        }else if(numeroSoin == 500){
+            
+                switch (contrat){
+                case 'A':
+                    remboursement = (montant * 25)/100;
+                break;
+                case 'B':
+                    remboursement = (montant * 50)/100;
+                        if (remboursement > 50){
+                            remboursement = 50;
+                        }
+                break;
+                case 'C':
+                    remboursement = (montant * 90)/100;
+                break;
+                case 'D':
+                    remboursement = montant;
+                        if (remboursement > 75){
+                            remboursement = 75;
+                        }
+                break;
+                    
+            
+            }
+        
+        }else if(numeroSoin == 600){
+            
+                        switch (contrat){
+                case 'A':
+                    remboursement = 0;
+                break;
+                case 'B':
+                    remboursement = 0; 
+                break;
+                case 'C':
+                    remboursement = (montant * 90)/100;
+                break;
+                case 'D':
+                    remboursement = montant;
+                        if (remboursement > 65){
+                            remboursement = 65;
+                        }
+                break;
+                    
+            
+            }
+        
+        }else if (numeroSoin == 500){
+            
+            switch (contrat){
+                case 'A':
+                    remboursement = (montant * 25)/100;
+                break;
+                case 'B':
+                    remboursement = (montant * 50)/100;
+                        if (remboursement > 50){
+                            remboursement = 50;
+                        }
+                break;
+                case 'C':
+                    remboursement = (montant * 90)/100;
+                break;
+                case 'D':
+                    remboursement = montant;
+                        if (remboursement > 75){
+                            remboursement = 75;
+                        }
+                break;
+                    
+            
+            }
+        
+        }else if(numeroSoin == 600){
+            
+            switch (contrat){
+                case 'A':
+                    remboursement = (montant * 40)/100;
+                break;
+                case 'B':
+                    remboursement = montant;
+                break;
+         
+                case 'C':
+                    remboursement = (montant * 90)/100;
+                break;
+                case 'D':
+                    remboursement = montant;
+                        if (remboursement > 100){
+                            remboursement = 100;
+                        }
+                break;
+                    
+            
+            }
+        
+        }else{
+            
+            switch (contrat){
+                case 'A':
+                    remboursement = 0;
+                break;
+                case 'B':
+                    remboursement = (montant * 70)/100;
+                break;
+                
+                case 'C':
+                    remboursement = (montant * 90)/100;
+                break;
+                case 'D':
+                    remboursement = montant;
+                        if (remboursement > 90){
+                            remboursement = 90;
+                        }
+                break;
+                    
+            
+            }
+        
+        
+        }
+        
+        
+        return remboursement;
     }
     
     
