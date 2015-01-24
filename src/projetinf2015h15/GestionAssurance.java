@@ -148,6 +148,21 @@ public class GestionAssurance {
         
        return false;
     }
+    
+    // Validation le numéro du soin
+     /**
+     *
+     * @author Groupe 15
+     * @param numSoin
+     * @return
+    */
+     public static boolean validerNumeroSoin(int numSoin){
+         
+         
+       
+       return false;
+    }        
+       
      
     // Validation la date du soin
      /**
@@ -188,6 +203,154 @@ public class GestionAssurance {
         return false;
     
     } 
+    
+    /**
+     *
+     * @author Groupe 15
+     * retourne la liste des dates des soins.
+     * @param rembourssement
+     * @param uneReclamation 
+    */
+    public static void modifierLeSoin(Double rembourssement,JSONObject uneReclamation){
+        
+        
+    }
+    
+    /**
+     *
+     * @author Groupe 15
+     * retourne la liste des dates des soins.
+     * @param contrat
+     * @param montant
+     * @param numSoin
+     * @return le rembourcement
+    */
+    public static Double appliquerLesContrat(String contrat, Double montant, int numSoin) {
+        
+        Double rembourssement = 0.0;
+        switch (contrat) {
+
+            case "A":
+                if (numSoin == 0 ||numSoin == 100 || numSoin == 200 || numSoin == 500 ){
+                    rembourssement = montant * 0.25;
+                    
+                }else if((numSoin >= 300 && numSoin <= 399) || (numSoin == 400) 
+                        || (numSoin == 700) ){
+                    rembourssement = 0.0;
+                    
+                }else{
+                    rembourssement = montant * 0.4;
+                }
+                    
+                break;
+
+            case "B":
+                
+                if (numSoin == 0 || numSoin == 500 ){
+                    rembourssement = montant * 0.5;
+                    
+                    if(rembourssement > 50){
+                        
+                        rembourssement = 50.0;
+                    }
+                    
+                }else if((numSoin >= 300 && numSoin <= 399)  ){
+                    
+                    rembourssement = montant * 0.5;
+                    
+                }else if(numSoin == 0){
+                    rembourssement = montant * 0.5;
+                    
+                    if(rembourssement > 40){
+                        
+                        rembourssement = 40.0;
+                    }
+                }else if (numSoin == 200){
+                    
+                    rembourssement = montant;
+                    
+                    if(rembourssement > 70){
+                        
+                        rembourssement = 70.0;
+                    }
+                    
+                }else if (numSoin == 400){
+                    
+                    rembourssement = 0.0;
+                    
+                }else if (numSoin == 600){
+                    
+                    rembourssement = montant;
+                    
+                }else {
+                    
+                    rembourssement = montant * 0.7;
+                }
+                
+                break;
+
+            case "C":
+                
+                rembourssement = montant * 0.9;
+                
+                break;
+
+            case "D":
+                
+                if (numSoin == 200 || numSoin == 600 ){
+                    
+                    rembourssement = montant;
+                    
+                    if(rembourssement > 100){
+                        
+                        rembourssement = 100.0;
+                    }
+                    
+                }else if((numSoin >= 300 && numSoin <= 399)  ){
+                    
+                    rembourssement = montant ;
+                    
+                }else if(numSoin == 100 || numSoin == 500){
+                    
+                    rembourssement = montant;
+                    
+                    if(rembourssement > 75){
+                        
+                        rembourssement = 75.0;
+                    }
+                }else if (numSoin == 0){
+                    
+                    rembourssement = montant;
+                    
+                    if(rembourssement > 85){
+                        
+                        rembourssement = 85.0;
+                    }
+                    
+                }else if (numSoin == 400){
+                    
+                    rembourssement = montant;
+                    
+                    if(rembourssement > 65){
+                        
+                        rembourssement = 65.0;
+                    }
+                    
+                }else if (numSoin == 700){
+                    
+                    rembourssement = montant;
+                    
+                    if(rembourssement > 90){
+                        
+                        rembourssement = 90.0;
+                    }
+                    
+                }
+                break;
+        }
+
+        return rembourssement;
+    }
     /**
      *
      * @author Groupe 15
@@ -211,257 +374,4 @@ public class GestionAssurance {
         return objetJson.toString();
     }
     
-    /**
-     *
-     * @author Groupe 15
-     * retourne le montant du remboursement.
-     * @param contrat
-     * @param numeroSoin
-     * @param montant
-     * @return 
-    */
-    public static double remboursement(char contrat,double numeroSoin, double montant) {
-        
-        double remboursement = 0.00;
-        
-        if (numeroSoin == 0){
-            switch (contrat){
-                case 'A':
-                    remboursement = (montant * 25)/100;
-                break;
-                case 'B':
-                    remboursement = (montant * 50)/100;
-                        if (remboursement > 40){
-                            remboursement = 40;
-                        } 
-                break;
-                case 'C':
-                    remboursement = (montant * 90)/100;
-                break;
-                case 'D':
-                    remboursement = montant;
-                        if (remboursement > 85){
-                            remboursement = 85;
-                        }
-                break;
-            }
-        
-        }else if(numeroSoin == 100){
-            
-            switch (contrat){
-                case 'A':
-                    remboursement = (montant * 25)/100;
-                break;
-                case 'B':
-                    remboursement = (montant * 50)/100;
-                        if (remboursement > 50){
-                            remboursement = 50;
-                        }
-                break;
-                case 'C':
-                    remboursement = (montant * 90)/100;
-                break;
-                case 'D':
-                    remboursement = montant;
-                        if (remboursement > 75){
-                            remboursement = 75;
-                        }
-                break;
-                    
-            
-            }
-        
-        }else if(numeroSoin == 200){
-            
-                            
-            switch (contrat){
-                case 'A':
-                    remboursement = (montant * 25)/100;
-                break;
-                case 'B':
-                    remboursement = montant;
-                        if (remboursement > 70){
-                            remboursement = 70;
-                        }
-                break;
-                case 'C':
-                    remboursement = (montant * 90)/100;
-                break;
-                case 'D':
-                    remboursement = montant;
-                        if (remboursement > 100){
-                            remboursement = 100;
-                        }
-                
-                break;
-            }
-        
-        }else if(numeroSoin >= 300 && numeroSoin <= 399){
-            
-              switch (contrat){
-                case 'A':
-                    remboursement = 0;
-                break;
-                case 'B':
-                    remboursement = (montant * 50)/100;
-                break;
-                 
-                case 'C':
-                    remboursement = (montant * 90)/100;
-                break;
-                case 'D':
-                    remboursement = montant;  
-                break;
-              }
-        
-        }else if(numeroSoin == 400){
-            
-                        
-            switch (contrat){
-                case 'A':
-                    remboursement = 0;
-                break;
-                case 'B':
-                    remboursement = 0; 
-                break;
-                case 'C':
-                    remboursement = (montant * 90)/100;
-                break;
-                case 'D':
-                    remboursement = montant;
-                        if (remboursement > 65){
-                            remboursement = 65;
-                        }
-                break;
-                    
-            
-            }
-        
-        }else if(numeroSoin == 500){
-            
-                switch (contrat){
-                case 'A':
-                    remboursement = (montant * 25)/100;
-                break;
-                case 'B':
-                    remboursement = (montant * 50)/100;
-                        if (remboursement > 50){
-                            remboursement = 50;
-                        }
-                break;
-                case 'C':
-                    remboursement = (montant * 90)/100;
-                break;
-                case 'D':
-                    remboursement = montant;
-                        if (remboursement > 75){
-                            remboursement = 75;
-                        }
-                break;
-                    
-            
-            }
-        
-        }else if(numeroSoin == 600){
-            
-                        switch (contrat){
-                case 'A':
-                    remboursement = 0;
-                break;
-                case 'B':
-                    remboursement = 0; 
-                break;
-                case 'C':
-                    remboursement = (montant * 90)/100;
-                break;
-                case 'D':
-                    remboursement = montant;
-                        if (remboursement > 65){
-                            remboursement = 65;
-                        }
-                break;
-                    
-            
-            }
-        
-        }else if (numeroSoin == 500){
-            
-            switch (contrat){
-                case 'A':
-                    remboursement = (montant * 25)/100;
-                break;
-                case 'B':
-                    remboursement = (montant * 50)/100;
-                        if (remboursement > 50){
-                            remboursement = 50;
-                        }
-                break;
-                case 'C':
-                    remboursement = (montant * 90)/100;
-                break;
-                case 'D':
-                    remboursement = montant;
-                        if (remboursement > 75){
-                            remboursement = 75;
-                        }
-                break;
-                    
-            
-            }
-        
-        }else if(numeroSoin == 600){
-            
-            switch (contrat){
-                case 'A':
-                    remboursement = (montant * 40)/100;
-                break;
-                case 'B':
-                    remboursement = montant;
-                break;
-         
-                case 'C':
-                    remboursement = (montant * 90)/100;
-                break;
-                case 'D':
-                    remboursement = montant;
-                        if (remboursement > 100){
-                            remboursement = 100;
-                        }
-                break;
-                    
-            
-            }
-        
-        }else{
-            
-            switch (contrat){
-                case 'A':
-                    remboursement = 0;
-                break;
-                case 'B':
-                    remboursement = (montant * 70)/100;
-                break;
-                
-                case 'C':
-                    remboursement = (montant * 90)/100;
-                break;
-                case 'D':
-                    remboursement = montant;
-                        if (remboursement > 90){
-                            remboursement = 90;
-                        }
-                break;
-                    
-            
-            }
-        
-        
-        }
-        
-        
-        return remboursement;
-    }
-    
-    
-     
 }
