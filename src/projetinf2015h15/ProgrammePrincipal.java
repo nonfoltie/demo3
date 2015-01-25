@@ -33,6 +33,14 @@ public class ProgrammePrincipal {
      */
     public static void main(String[] args) throws IOException {
         
+        String fichierEntree = "resources/inputFile.json";
+        String fichierSortie = "output.json";
+        
+        if(args.length != 2){
+            System.out.println("Données invalides");
+            System.exit(0);
+        }
+        
         JSONObject objet = formaterObjet();
         String numClient = getNumeroClient(objet);
         String contrat = getCategorieContrat(objet);
