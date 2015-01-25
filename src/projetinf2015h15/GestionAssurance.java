@@ -97,8 +97,7 @@ public class GestionAssurance {
      * @return le mois
     */
     public static String getMois(JSONObject objActuel){
-        
-       String leMois = null;
+        String leMois = null;
         
         if (objActuel != null){
             leMois = objActuel.getString("mois");
@@ -145,7 +144,7 @@ public class GestionAssurance {
             
             j = numero.trim().length();
             
-            while(i < j && (numero.charAt(i) >= '0' && numero.charAt(i) <= '9')){
+            while(i < j && (numero.trim().charAt(i) >= '0' && numero.trim().charAt(i) <= '9')){
                i++;
             }  
             reponse = i == j;
@@ -179,6 +178,7 @@ public class GestionAssurance {
      * @return vrai si la date est valide. Sinon, faux.
     */
      public static boolean validerFormatMois(String mois){
+         
          
         
        return false;
