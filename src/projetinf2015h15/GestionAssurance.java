@@ -27,6 +27,15 @@ public class GestionAssurance {
      * @return 
      * @throws java.io.IOException
     */
+    
+    public static final double TAUX_0_POUR_CENT = 0.00;
+    public static final double TAUX_25_POUR_CENT = 0.25;
+    public static final double TAUX_40_POUR_CENT = 0.4;
+    public static final double TAUX_50_POUR_CENT = 0.5;
+    public static final double TAUX_70_POUR_CENT = 0.7;
+    public static final double TAUX_90_POUR_CENT = 0.9;
+    public static final double TAUX_100_POUR_CENT = 1.00;
+    
      public static String chargerFichier() throws IOException{
         
         String texteJson = null;
@@ -97,8 +106,7 @@ public class GestionAssurance {
      * @return le mois
     */
     public static String getMois(JSONObject objActuel){
-        
-       String leMois = null;
+        String leMois = null;
         
         if (objActuel != null){
             leMois = objActuel.getString("mois");
@@ -145,7 +153,7 @@ public class GestionAssurance {
             
             j = numero.trim().length();
             
-            while(i < j && (numero.charAt(i) >= '0' && numero.charAt(i) <= '9')){
+            while(i < j && (numero.trim().charAt(i) >= '0' && numero.trim().charAt(i) <= '9')){
                i++;
             }  
             reponse = i == j;
@@ -179,9 +187,27 @@ public class GestionAssurance {
      * @return vrai si la date est valide. Sinon, faux.
     */
      public static boolean validerFormatMois(String mois){
-         
-        
-       return false;
+      boolean formatEstValide = true;
+      boolean esNumeric =true;
+     if( mois== null ){
+         esNumeric = false;
+     }else {
+      String ch1 = mois.trim().substring(0,4);
+      String ch2 = mois.trim().substring(5);
+      
+             for(int i=0,j=0;i< ch1.length()&& j< ch2.length();i++,j++){
+              if(ch1.charAt(i)<'0'||ch1.charAt(i)>'9'||ch2.charAt(j)<'0'||ch2.charAt(j)>'9'){
+                  esNumeric = false;
+              }
+          }
+          if( mois.trim().length()!= 7 || mois.trim().substring(4,5).charAt(4)!='-'){
+             formatEstValide = false;    
+             
+          }
+      
+     }  
+     
+       return (esNumeric&&formatEstValide );
     }
     
     /**
@@ -277,7 +303,7 @@ public class GestionAssurance {
     /**
      *
      * @author Groupe 15
-     * retourne la liste des dates des soins.
+     * retourne le rembourssement du soin calcule selon le contrat, le montant et le numero de soin.
      * @param contrat
      * @param montant
      * @param numSoin
@@ -290,14 +316,14 @@ public class GestionAssurance {
 
             case "A":
                 if (numSoin == 0 ||numSoin == 100 || numSoin == 200 || numSoin == 500 ){
-                    rembourssement = montant * 0.25;
+                    rembourssement = montant * TAUX_25_POUR_CENT;
                     
                 }else if((numSoin >= 300 && numSoin <= 399) || (numSoin == 400) 
                         || (numSoin == 700) ){
-                    rembourssement = 0.0;
+                    rembourssement = montant * TAUX_0_POUR_CENT;
                     
                 }else{
-                    rembourssement = montant * 0.4;
+                    rembourssement = montant * TAUX_40_POUR_CENT;
                 }
                     
                 break;
@@ -305,7 +331,7 @@ public class GestionAssurance {
             case "B":
                 
                 if (numSoin == 0 || numSoin == 500 ){
-                    rembourssement = montant * 0.5;
+                    rembourssement = montant * TAUX_50_POUR_CENT;
                     
                     if(rembourssement > 50){
                         
@@ -314,10 +340,10 @@ public class GestionAssurance {
                     
                 }else if((numSoin >= 300 && numSoin <= 399)  ){
                     
-                    rembourssement = montant * 0.5;
+                    rembourssement = montant * TAUX_50_POUR_CENT;
                     
                 }else if(numSoin == 0){
-                    rembourssement = montant * 0.5;
+                    rembourssement = montant * TAUX_50_POUR_CENT;
                     
                     if(rembourssement > 40){
                         
@@ -334,22 +360,22 @@ public class GestionAssurance {
                     
                 }else if (numSoin == 400){
                     
-                    rembourssement = 0.0;
+                    rembourssement = montant * TAUX_0_POUR_CENT;
                     
                 }else if (numSoin == 600){
                     
-                    rembourssement = montant;
+                    rembourssement = montant * TAUX_100_POUR_CENT;
                     
                 }else {
                     
-                    rembourssement = montant * 0.7;
+                    rembourssement = montant * TAUX_70_POUR_CENT;
                 }
                 
                 break;
 
             case "C":
                 
-                rembourssement = montant * 0.9;
+                rembourssement = montant * TAUX_90_POUR_CENT;
                 
                 break;
 
@@ -357,7 +383,7 @@ public class GestionAssurance {
                 
                 if (numSoin == 200 || numSoin == 600 ){
                     
-                    rembourssement = montant;
+                    rembourssement = montant * TAUX_100_POUR_CENT;
                     
                     if(rembourssement > 100){
                         
@@ -366,11 +392,11 @@ public class GestionAssurance {
                     
                 }else if((numSoin >= 300 && numSoin <= 399)  ){
                     
-                    rembourssement = montant ;
+                    rembourssement = montant * TAUX_100_POUR_CENT ;
                     
                 }else if(numSoin == 100 || numSoin == 500){
                     
-                    rembourssement = montant;
+                    rembourssement = montant * TAUX_100_POUR_CENT;
                     
                     if(rembourssement > 75){
                         
@@ -378,7 +404,7 @@ public class GestionAssurance {
                     }
                 }else if (numSoin == 0){
                     
-                    rembourssement = montant;
+                    rembourssement = montant * TAUX_100_POUR_CENT;
                     
                     if(rembourssement > 85){
                         
@@ -387,7 +413,7 @@ public class GestionAssurance {
                     
                 }else if (numSoin == 400){
                     
-                    rembourssement = montant;
+                    rembourssement = montant * TAUX_100_POUR_CENT;
                     
                     if(rembourssement > 65){
                         
@@ -396,7 +422,7 @@ public class GestionAssurance {
                     
                 }else if (numSoin == 700){
                     
-                    rembourssement = montant;
+                    rembourssement = montant * TAUX_100_POUR_CENT;
                     
                     if(rembourssement > 90){
                         
