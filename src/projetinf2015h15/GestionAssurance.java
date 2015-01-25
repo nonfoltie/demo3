@@ -257,6 +257,8 @@ public class GestionAssurance {
     */
     public static void modifierLeSoin(Double rembourssement,JSONObject uneReclamation){
         
+        String leMontant = rembourssement + "$";
+        uneReclamation.accumulate("montant", leMontant);
         
     }
     
