@@ -188,8 +188,8 @@ public class GestionAssurance {
     public static boolean validerFormatMois(String mois) {
         boolean formatEstValide = false;
 
-        if (mois != null && mois.trim().length() == 7 && mois.trim().substring(4,5).charAt(4) == '-') {
-            String ch1 = mois.trim().substring(0,4);
+        if (mois != null && mois.trim().length() == 7 && mois.trim().substring(4, 5).charAt(4) == '-') {
+            String ch1 = mois.trim().substring(0, 4);
             String ch2 = mois.trim().substring(5);
             for (int i = 0, j = 0; i < ch1.length() && j < ch2.length(); i++, j++) {
                 if (ch1.charAt(i) >= '0' && ch1.charAt(i) <= '9' && ch2.charAt(j) >= '0' && ch2.charAt(j) <= '9'
@@ -248,8 +248,18 @@ public class GestionAssurance {
      * @return
      */
     public static boolean validerMontant(String montant) {
-
-        return false;
+        boolean montantEstValide = true;
+        if (montant == null) {
+            montantEstValide = false;
+        } else {
+            for (int i = 0; i < montant.trim().length(); i++) {
+                if (montant.trim().charAt(i) < '0' || montant.trim().charAt(i) > '9'
+                        || montant.trim().charAt(montant.trim().length() - 1) == '$') {
+                    montantEstValide = false;
+                }
+            }
+        }
+        return montantEstValide;
     }
 
     /**
