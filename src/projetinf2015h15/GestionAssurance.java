@@ -207,7 +207,7 @@ public class GestionAssurance {
       
      }  
      
-       return (esNumeric&&esNumeric);
+       return (esNumeric&&formatEstValide );
     }
     
     /**
