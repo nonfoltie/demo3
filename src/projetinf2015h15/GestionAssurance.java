@@ -7,7 +7,9 @@ package projetinf2015h15;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
@@ -61,87 +63,120 @@ public class GestionAssurance {
     /**
      *
      * @author Groupe 15
-     * retourne le numero du client.
      * @param objActuel
-     * @return
+     * @return le numero du client.
     */
     public static String getNumeroClient(JSONObject objActuel){
         
+        String numeroClient = null;
         
-        return null;
+        if (objActuel != null){
+            numeroClient = objActuel.getString("client");
+        }
+        return numeroClient;
     }
     /**
      *
      * @author Groupe 15
-     * retourne la catégorie du contrat.
      * @param objActuel
-     * @return
+     * @return la catégorie du contrat.
     */
     public static String getCategorieContrat(JSONObject objActuel) {
         
+        String leContrat = null;
         
-        return null;
+        if (objActuel != null){
+            leContrat = objActuel.getString("contrat");
+        }
+        return leContrat;
     }
     /**
      *
      * @author Groupe 15
-     * retourne le mois.
      * @param objActuel
-     * @return
+     * @return le mois
     */
     public static String getMois(JSONObject objActuel){
         
-       
-        return null;
+       String leMois = null;
+        
+        if (objActuel != null){
+            leMois = objActuel.getString("mois");
+        }
+        return leMois;
     }
     /**
      *
      * @author Groupe 15
-     * retourne la liste des soins.
      * @param objetJson
-     * @return
+     * @return la liste des soins
     */
     public static List<JSONObject> listerLesReclamations(JSONObject objetJson ){
         
+        List<JSONObject> listeReclamation = null;
         
-        return null;
+        if (objetJson != null){
+            
+            listeReclamation = new ArrayList<>();
+            String reclamation = objetJson.getString("reclamations");
+            JSONArray tableauReclamation = (JSONArray) JSONSerializer.toJSON(reclamation);
+        
+            for (int i = 0; i < tableauReclamation.size(); i++){
+            
+                JSONObject objetCourant = tableauReclamation.getJSONObject(i);
+                listeReclamation.add(objetCourant);
+            }
+        }
+        return listeReclamation;
     }
      
-    // Validation numero du client
     /**
-     *
      * @author Groupe 15
-     * retourne la liste des dates des soins.
      * @param numero
-     * @return
+     * @return vrai si le numéro du client est valide. Sinon, faux.
     */
     public static boolean validerNumeroClient(String numero){
         
+        boolean reponse = false;
+        int i = 0;
+        int j ;
         
-       return false; 
+        if(numero != null && numero.trim().length() == 6){
+            
+            j = numero.trim().length();
+            
+            while(i < j && (numero.charAt(i) >= '0' && numero.charAt(i) <= '9')){
+               i++;
+            }  
+            reponse = i == j;
+        }
+       return reponse; 
     }
     
    
     /**
-     *
      * @author Groupe 15
      * retourne la liste des dates des soins.
      * @param contrat
-     * @return
+     * @return vrai si le contrat est valide. Sinon, faux.
     */
     public static boolean validerContrat(String contrat){
         
-        
-       return false; 
+        boolean reponse = false;
+
+        if(contrat != null && (contrat.equals("A")|| contrat.equals("B")
+                || contrat.equals("C") || contrat.equals("D"))){
+            
+            reponse = true;
+        }    
+         
+       return reponse;
     }
     
-    // Validation du mois
     /**
-     *
      * @author Groupe 15
-     * retourne la liste des dates des soins.
      * @param mois
-     * @return
+     * @return vrai si la date est valide. Sinon, faux.
     */
      public static boolean validerFormatMois(String mois){
          
@@ -149,22 +184,25 @@ public class GestionAssurance {
        return false;
     }
     
-    // Validation le numéro du soin
-     /**
-     *
+    /**
      * @author Groupe 15
      * @param numSoin
-     * @return
+     * @return vrai si le numéro du soin est valide. Sinon, faux.
     */
      public static boolean validerNumeroSoin(int numSoin){
          
-         
+          boolean reponse = false;
+        
+       if((numSoin == 0) || (numSoin == 100) || (numSoin == 200) || (numSoin == 400)
+               || (numSoin >= 300 && numSoin <= 399) || (numSoin == 500)
+               || (numSoin == 600) || (numSoin == 700)){
+          
+           reponse = true;
+       }
        
-       return false;
+       return reponse;
     }        
-       
      
-    // Validation la date du soin
      /**
      *
      * @author Groupe 15
@@ -174,8 +212,14 @@ public class GestionAssurance {
     */
      public static boolean validerLaDate(String date){
          
+        boolean reponse = false;
         
-       return false;
+       if(date != null && date.length() >= 7){
+          
+           reponse = validerFormatMois(date.trim().substring(0,7));
+       }
+       
+       return reponse;
     } 
      
     /**
