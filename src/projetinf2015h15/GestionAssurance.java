@@ -187,10 +187,27 @@ public class GestionAssurance {
      * @return vrai si la date est valide. Sinon, faux.
     */
      public static boolean validerFormatMois(String mois){
-         
-         
-        
-       return false;
+      boolean formatEstValide = true;
+      boolean esNumeric =true;
+     if( mois== null ){
+         esNumeric = false;
+     }else {
+      String ch1 = mois.trim().substring(0,4);
+      String ch2 = mois.trim().substring(5);
+      
+             for(int i=0,j=0;i< ch1.length()&& j< ch2.length();i++,j++){
+              if(ch1.charAt(i)<'0'||ch1.charAt(i)>'9'||ch2.charAt(j)<'0'||ch2.charAt(j)>'9'){
+                  esNumeric = false;
+              }
+          }
+          if( mois.trim().length()!= 7&& mois.trim().substring(4,5).charAt(4)!='-'){
+             formatEstValide = false;    
+             
+          }
+      
+     }  
+     
+       return (esNumeric&&esNumeric);
     }
     
     /**
