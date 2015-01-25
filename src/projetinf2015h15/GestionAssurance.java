@@ -18,13 +18,7 @@ import net.sf.json.JSONSerializer;
  * @author Groupe 15
  */
 public class GestionAssurance {
-
-    /**
-     *
-     * @author Groupe 15 Changement du fichier d'entrée.
-     * @return
-     * @throws java.io.IOException
-     */
+    
     public static final double TAUX_0_POUR_CENT = 0.00;
     public static final double TAUX_25_POUR_CENT = 0.25;
     public static final double TAUX_40_POUR_CENT = 0.4;
@@ -32,7 +26,14 @@ public class GestionAssurance {
     public static final double TAUX_70_POUR_CENT = 0.7;
     public static final double TAUX_90_POUR_CENT = 0.9;
     public static final double TAUX_100_POUR_CENT = 1.00;
+    
 
+    /**
+     *
+     * @author Groupe 15 Changement du fichier d'entrée.
+     * @return
+     * @throws java.io.IOException
+     */
     public static String chargerFichier() throws IOException {
 
         String texteJson = null;
@@ -227,20 +228,30 @@ public class GestionAssurance {
      *
      * @author Groupe 15 retourne la liste des dates des soins.
      * @param date
+     * @param mois
      * @return
-     */
-    public static boolean validerLaDate(String date) {
-
+    */
+     public static boolean validerLaDate(String date, String mois){
+         
         boolean reponse = false;
-
-        if (date != null && date.length() >= 7) {
-
-            reponse = validerFormatMois(date.trim().substring(0, 7));
-        }
-
-        return reponse;
-    }
-
+        boolean valide ;
+        int i = 0;
+        
+       if(date != null && date.length() >= 7){
+         
+           valide = validerFormatMois(date.trim().substring(0,7));
+          
+           if(valide){
+               
+        	while (i < mois.length() && (date.charAt(i) == mois.charAt(i))){
+                    i++;
+        	}      	   
+        	reponse = i == mois.length();      		   
+           }  	   
+       }     
+       return reponse;
+    } 
+    
     /**
      *
      * @author Groupe 15 retourne la liste des dates des soins.
@@ -266,10 +277,11 @@ public class GestionAssurance {
      *
      * @author Groupe 15 retourne le montant du remboursement.
      * @param objet
+     * @param mois
      * @return
-     */
-    public static boolean validerLesSoins(JSONObject objet) {
-
+    */
+    public static boolean validerLesSoins(JSONObject objet, String mois){
+        
         return false;
 
     }
