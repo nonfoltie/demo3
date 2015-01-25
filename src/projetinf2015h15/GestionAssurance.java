@@ -188,13 +188,12 @@ public class GestionAssurance {
     public static boolean validerFormatMois(String mois) {
         boolean formatEstValide = false;
 
-        if (mois != null || mois.trim().length() == 7 || mois.trim().substring(4, 5).charAt(4) == '-') {
-            String ch1 = mois.trim().substring(0, 4);
+        if (mois != null && mois.trim().length() == 7 && mois.trim().substring(4,5).charAt(4) == '-') {
+            String ch1 = mois.trim().substring(0,4);
             String ch2 = mois.trim().substring(5);
             for (int i = 0, j = 0; i < ch1.length() && j < ch2.length(); i++, j++) {
                 if (ch1.charAt(i) >= '0' && ch1.charAt(i) <= '9' && ch2.charAt(j) >= '0' && ch2.charAt(j) <= '9'
                         && Integer.parseInt(ch2) >= 1 && Integer.parseInt(ch2) <= 12) {
-
                     formatEstValide = true;
 
                 }
