@@ -200,7 +200,7 @@ public class GestionAssurance {
                   esNumeric = false;
               }
           }
-          if( mois.trim().length()!= 7&& mois.trim().substring(4,5).charAt(4)!='-'){
+          if( mois.trim().length()!= 7 || mois.trim().substring(4,5).charAt(4)!='-'){
              formatEstValide = false;    
              
           }
