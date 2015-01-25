@@ -18,13 +18,7 @@ import net.sf.json.JSONSerializer;
  * @author Groupe 15
  */
 public class GestionAssurance {
-
-    /**
-     *
-     * @author Groupe 15 Changement du fichier d'entrée.
-     * @return
-     * @throws java.io.IOException
-     */
+    
     public static final double TAUX_0_POUR_CENT = 0.00;
     public static final double TAUX_25_POUR_CENT = 0.25;
     public static final double TAUX_40_POUR_CENT = 0.4;
@@ -32,7 +26,14 @@ public class GestionAssurance {
     public static final double TAUX_70_POUR_CENT = 0.7;
     public static final double TAUX_90_POUR_CENT = 0.9;
     public static final double TAUX_100_POUR_CENT = 1.00;
+    
 
+    /**
+     *
+     * @author Groupe 15 Changement du fichier d'entrée.
+     * @return
+     * @throws java.io.IOException
+     */
     public static String chargerFichier() throws IOException {
 
         String texteJson = null;
