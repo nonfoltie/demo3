@@ -208,17 +208,27 @@ public class GestionAssurance {
      * @author Groupe 15
      * retourne la liste des dates des soins.
      * @param date
+     * @param mois
      * @return
     */
-     public static boolean validerLaDate(String date){
+     public static boolean validerLaDate(String date, String mois){
          
         boolean reponse = false;
+        boolean valide ;
+        int i = 0;
         
        if(date != null && date.length() >= 7){
+         
+           valide = validerFormatMois(date.trim().substring(0,7));
           
-           reponse = validerFormatMois(date.trim().substring(0,7));
-       }
-       
+           if(valide){
+               
+        	while (i < mois.length() && (date.charAt(i) == mois.charAt(i))){
+                    i++;
+        	}      	   
+        	reponse = i == mois.length();      		   
+           }  	   
+       }     
        return reponse;
     } 
      
@@ -239,9 +249,10 @@ public class GestionAssurance {
      * @author Groupe 15
      * retourne le montant du remboursement.
      * @param objet
+     * @param mois
      * @return
     */
-    public static boolean validerLesSoins(JSONObject objet){
+    public static boolean validerLesSoins(JSONObject objet, String mois){
         
         
         return false;
