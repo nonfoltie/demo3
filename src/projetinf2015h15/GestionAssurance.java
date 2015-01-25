@@ -18,7 +18,7 @@ import net.sf.json.JSONSerializer;
  * @author Groupe 15
  */
 public class GestionAssurance {
-    
+
     public static final double TAUX_0_POUR_CENT = 0.00;
     public static final double TAUX_25_POUR_CENT = 0.25;
     public static final double TAUX_40_POUR_CENT = 0.4;
@@ -26,7 +26,6 @@ public class GestionAssurance {
     public static final double TAUX_70_POUR_CENT = 0.7;
     public static final double TAUX_90_POUR_CENT = 0.9;
     public static final double TAUX_100_POUR_CENT = 1.00;
-    
 
     /**
      *
@@ -230,28 +229,28 @@ public class GestionAssurance {
      * @param date
      * @param mois
      * @return
-    */
-     public static boolean validerLaDate(String date, String mois){
-         
+     */
+    public static boolean validerLaDate(String date, String mois) {
+
         boolean reponse = false;
-        boolean valide ;
+        boolean valide;
         int i = 0;
-        
-       if(date != null && date.length() >= 7){
-         
-           valide = validerFormatMois(date.trim().substring(0,7));
-          
-           if(valide){
-               
-        	while (i < mois.length() && (date.charAt(i) == mois.charAt(i))){
+
+        if (date != null && date.length() >= 7) {
+
+            valide = validerFormatMois(date.trim().substring(0, 7));
+
+            if (valide) {
+
+                while (i < mois.length() && (date.charAt(i) == mois.charAt(i))) {
                     i++;
-        	}      	   
-        	reponse = i == mois.length();      		   
-           }  	   
-       }     
-       return reponse;
-    } 
-    
+                }
+                reponse = i == mois.length();
+            }
+        }
+        return reponse;
+    }
+
     /**
      *
      * @author Groupe 15 retourne la liste des dates des soins.
@@ -265,7 +264,7 @@ public class GestionAssurance {
         } else {
             for (int i = 0; i < montant.trim().length(); i++) {
                 if (montant.trim().charAt(i) < '0' || montant.trim().charAt(i) > '9'
-                        || montant.trim().charAt(montant.trim().length() - 1) == '$') {
+                      || montant.trim().charAt(montant.trim().length() - 1) != '$') {
                     montantEstValide = false;
                 }
             }
@@ -279,9 +278,9 @@ public class GestionAssurance {
      * @param objet
      * @param mois
      * @return
-    */
-    public static boolean validerLesSoins(JSONObject objet, String mois){
-        
+     */
+    public static boolean validerLesSoins(JSONObject objet, String mois) {
+
         return false;
 
     }
