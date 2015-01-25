@@ -186,22 +186,34 @@ public class GestionAssurance {
      * @return vrai si la date est valide. Sinon, faux.
      */
     public static boolean validerFormatMois(String mois) {
-        boolean formatEstValide = false;
-
-        if (mois != null && mois.trim().length() == 7 && mois.trim().substring(4, 5).charAt(4) == '-') {
-            String ch1 = mois.trim().substring(0, 4);
+        boolean moisEsChiffre = true;
+        boolean anneeEsChiffre = true;
+        boolean moisAnneeValide = true;
+        if (mois != null && mois.trim().length() == 7 && mois.trim().substring(4,5).charAt(4) == '-') {
+            String ch1 = mois.trim().substring(0,4);
             String ch2 = mois.trim().substring(5);
-            for (int i = 0, j = 0; i < ch1.length() && j < ch2.length(); i++, j++) {
-                if (ch1.charAt(i) >= '0' && ch1.charAt(i) <= '9' && ch2.charAt(j) >= '0' && ch2.charAt(j) <= '9'
-                        && Integer.parseInt(ch2) >= 1 && Integer.parseInt(ch2) <= 12) {
-                    formatEstValide = true;
+            for (int i = 0; i < ch2.length(); i++) {
+                if (ch2.charAt(i) < '0' || ch2.charAt(i) > '9') {
+                    moisEsChiffre = false;
+                    i = ch2.length();
 
                 }
             }
+            for (int j = 0; j < ch1.length(); j++) {
+                if (ch1.charAt(j) < '0' || ch1.charAt(j) > '9') {
+                    anneeEsChiffre = false;
+                    j = ch1.length();
+                }
+            }
 
+            if (moisEsChiffre && anneeEsChiffre) {
+                if (Integer.parseInt(ch2) == 0 || Integer.parseInt(ch2) > 12 || Integer.parseInt(ch1) < 1970) {
+                    moisAnneeValide = false;
+                }
+            }
         }
 
-        return formatEstValide;
+        return (moisEsChiffre&&anneeEsChiffre&&moisAnneeValide);
     }
 
     /**
@@ -264,7 +276,7 @@ public class GestionAssurance {
         } else {
             for (int i = 0; i < montant.trim().length(); i++) {
                 if (montant.trim().charAt(i) < '0' || montant.trim().charAt(i) > '9'
-                      || montant.trim().charAt(montant.trim().length() - 1) != '$') {
+                        || montant.trim().charAt(montant.trim().length() - 1) != '$') {
                     montantEstValide = false;
                 }
             }
