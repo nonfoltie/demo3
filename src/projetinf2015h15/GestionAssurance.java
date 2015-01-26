@@ -247,17 +247,23 @@ public class GestionAssurance {
      * @return
      */
     public static boolean validerMontant(String montant) {
-        boolean montantEstValide = true;
-        if (montant == null) {
-            montantEstValide = false;
-        } else {
-            for (int i = 0; i < montant.trim().length(); i++) {
-                if (montant.trim().charAt(i) < '0' || montant.trim().charAt(i) > '9'
-                        || montant.trim().charAt(montant.trim().length() - 1) != '$') {
-                    montantEstValide = false;
-                }
+        boolean montantEstValide = false;
+        
+        double unMontant = 0.0;
+        if (montant != null && montant.trim().charAt(montant.trim().length() - 1) == '$' ) {
+            try{
+            unMontant =  Double.parseDouble(montant.trim().substring(0,montant.trim().length() - 2));
+            
+            montantEstValide = true;
+            
+            }catch(NumberFormatException e){
+                
+             montantEstValide=false;
+              
             }
-        }
+                      
+            
+        } 
         return montantEstValide;
     }
 
@@ -269,6 +275,10 @@ public class GestionAssurance {
      * @return
      */
     public static boolean validerLesSoins(JSONObject objet, String mois) {
+        objet.getString("soin");
+        objet.getString("date");
+        objet.getString("montant");
+        
 
         return false;
 
