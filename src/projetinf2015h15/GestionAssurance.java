@@ -183,56 +183,33 @@ public class GestionAssurance {
     /**
      * @author Groupe 15
      * @param mois
-     * @return vrai si la date est valide. Sinon, faux.
+     * @return vrai si le format du mois est valide. Sinon, faux.
      */
     public static boolean validerFormatMois(String mois) {
-        boolean moisEsChiffre = true;
-        boolean anneeEsChiffre = true;
-        boolean moisAnneeValide = true;
-        if (mois != null && mois.trim().length() == 7 && mois.trim().substring(4,5).charAt(4) == '-') {
-            String ch1 = mois.trim().substring(0,4);
-            String ch2 = mois.trim().substring(5);
-            for (int i = 0; i < ch2.length(); i++) {
-                if (ch2.charAt(i) < '0' || ch2.charAt(i) > '9') {
-                    moisEsChiffre = false;
-                    i = ch2.length();
-
-                }
-            }
-            for (int j = 0; j < ch1.length(); j++) {
-                if (ch1.charAt(j) < '0' || ch1.charAt(j) > '9') {
-                    anneeEsChiffre = false;
-                    j = ch1.length();
-                }
-            }
-
-            if (moisEsChiffre && anneeEsChiffre) {
-                if (Integer.parseInt(ch2) == 0 || Integer.parseInt(ch2) > 12 || Integer.parseInt(ch1) < 1970) {
-                    moisAnneeValide = false;
-                }
-            }
-        }
-
-        return (moisEsChiffre&&anneeEsChiffre&&moisAnneeValide);
-    }
-
-    /**
-     * @author Groupe 15
-     * @param numSoin
-     * @return vrai si le numéro du soin est valide. Sinon, faux.
-     */
-    public static boolean validerNumeroSoin(int numSoin) {
-
+        
         boolean reponse = false;
-
-        if ((numSoin == 0) || (numSoin == 100) || (numSoin == 200) || (numSoin == 400)
-                || (numSoin >= 300 && numSoin <= 399) || (numSoin == 500)
-                || (numSoin == 600) || (numSoin == 700)) {
-
-            reponse = true;
+        int i = 0;
+        int j;
+        
+        if(mois != null && (mois.trim().length() == 7)
+                && Integer.parseInt(mois.substring(0, 4)) >= 1
+                && Integer.parseInt(mois.substring(5, 7)) >= 1 
+                && Integer.parseInt(mois.substring(5, 7)) <= 12){
+            
+            j = mois.trim().length();
+            
+            while(i < 4 && (mois.charAt(i) >= '0' && mois.charAt(i) <= '9')){
+               i++;
+            } 
+            if(mois.charAt(i) == '-'){
+                i++;
+                while(i < 7 && (mois.charAt(i) >= '0' && mois.charAt(i) <= '9')){
+                    i++;
+                }
+            }
+            reponse = i == j;
         }
-
-        return reponse;
+       return reponse;
     }
 
     /**
