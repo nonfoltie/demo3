@@ -275,14 +275,53 @@ public class GestionAssurance {
      * @return
      */
     public static boolean validerLesSoins(JSONObject objet, String mois) {
-        objet.getString("soin");
-        objet.getString("date");
-        objet.getString("montant");
+        boolean soisEsValide = false;
+   if (validerMontant(objet.getString("montant"))
+           &&validerLaDate(objet.getString("date"),objet.getString("mois") )){
+       if((Integer.parsInt (objet.getString("soin"))>=300
+               &&Integer.parsInt (objet.getString("soin"))<=399)
+               ||Integer.parsInt (objet.getString("soin"))== 0
+               ||Integer.parsInt (objet.getString("soin"))== 100
+               ||Integer.parsInt (objet.getString("soin"))== 200
+               ||Integer.parsInt (objet.getString("soin"))==400
+               ||Integer.parsInt (objet.getString("soin"))==500
+               ||Integer.parsInt (objet.getString("soin"))==600
+               ||Integer.parsInt (objet.getString("soin"))==700){
+           
+           soisEsValide = true;
+           
+       }      
+                       
+                       
+   }
+   
+   return soisEsValide;
+   
+    }
+                       
+                       
+                       
+       
+       
+       
+   
+       
+       
+       
+       
+          
+           
+           
+           
+          
+    
+    
+       
         
 
-        return false;
+      
 
-    }
+    
 
     /**
      *
