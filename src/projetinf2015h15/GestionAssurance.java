@@ -247,22 +247,19 @@ public class GestionAssurance {
      * @return
      */
     public static boolean validerMontant(String montant) {
+        
         boolean montantEstValide = false;
         
-        double unMontant = 0.0;
-        if (montant != null && montant.trim().charAt(montant.trim().length() - 1) == '$' ) {
+        if(montant != null && montant.trim().charAt(montant.trim().length() - 1) == '$'){
+            
             try{
-            unMontant =  Double.parseDouble(montant.trim().substring(0,montant.trim().length() - 2));
-            
-            montantEstValide = true;
-            
+                Double.parseDouble(montant.trim().substring(0, montant.trim().length() - 2));
+                montantEstValide = true;
+                
             }catch(NumberFormatException e){
                 
-             montantEstValide=false;
-              
+                montantEstValide=false;
             }
-                      
-            
         } 
         return montantEstValide;
     }
@@ -325,7 +322,7 @@ public class GestionAssurance {
 
     /**
      *
-     * @author Groupe 15 retourne la liste des dates des soins.
+     * @author Groupe 15.
      * @param rembourssement
      * @param uneReclamation
      */
