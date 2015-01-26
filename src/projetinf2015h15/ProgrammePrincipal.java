@@ -58,7 +58,7 @@ public class ProgrammePrincipal {
                 
                 String chaineMontant = uneReclamation.getString("montant");
                 int indiceFin = chaineMontant.trim().length();
-                Double montant = Double.parseDouble(chaineMontant.substring(0, indiceFin));
+                Double montant = Double.parseDouble(chaineMontant.substring(0, indiceFin - 1));
                 
                 leRembourssement = appliquerLesContrat(contrat, montant, numSoin);
                 modifierLeSoin(leRembourssement, uneReclamation);
