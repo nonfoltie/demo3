@@ -186,30 +186,30 @@ public class GestionAssurance {
      * @return vrai si le format du mois est valide. Sinon, faux.
      */
     public static boolean validerFormatMois(String mois) {
-        
+
         boolean reponse = false;
         int i = 0;
         int j;
-        
-        if(mois != null && (mois.trim().length() == 7)
+
+        if (mois != null && (mois.trim().length() == 7)
                 && Integer.parseInt(mois.substring(0, 4)) >= 1
-                && Integer.parseInt(mois.substring(5, 7)) >= 1 
-                && Integer.parseInt(mois.substring(5, 7)) <= 12){
-            
+                && Integer.parseInt(mois.substring(5, 7)) >= 1
+                && Integer.parseInt(mois.substring(5, 7)) <= 12) {
+
             j = mois.trim().length();
-            
-            while(i < 4 && (mois.charAt(i) >= '0' && mois.charAt(i) <= '9')){
-               i++;
-            } 
-            if(mois.charAt(i) == '-'){
+
+            while (i < 4 && (mois.charAt(i) >= '0' && mois.charAt(i) <= '9')) {
                 i++;
-                while(i < 7 && (mois.charAt(i) >= '0' && mois.charAt(i) <= '9')){
+            }
+            if (mois.charAt(i) == '-') {
+                i++;
+                while (i < 7 && (mois.charAt(i) >= '0' && mois.charAt(i) <= '9')) {
                     i++;
                 }
             }
             reponse = i == j;
         }
-       return reponse;
+        return reponse;
     }
 
     /**
@@ -247,20 +247,20 @@ public class GestionAssurance {
      * @return
      */
     public static boolean validerMontant(String montant) {
-        
+
         boolean montantEstValide = false;
-        
-        if(montant != null && montant.trim().charAt(montant.trim().length() - 1) == '$'){
-            
-            try{
+
+        if (montant != null && montant.trim().charAt(montant.trim().length() - 1) == '$') {
+
+            try {
                 Double.parseDouble(montant.trim().substring(0, montant.trim().length() - 2));
                 montantEstValide = true;
-                
-            }catch(NumberFormatException e){
-                
-                montantEstValide=false;
+
+            } catch (NumberFormatException e) {
+
+                montantEstValide = false;
             }
-        } 
+        }
         return montantEstValide;
     }
 
@@ -273,52 +273,25 @@ public class GestionAssurance {
      */
     public static boolean validerLesSoins(JSONObject objet, String mois) {
         boolean soisEsValide = false;
-   if (validerMontant(objet.getString("montant"))
-           &&validerLaDate(objet.getString("date"),objet.getString("mois") )){
-       if((Integer.parsInt (objet.getString("soin"))>=300
-               && Integer.parsInt (objet.getString("soin"))<=399)
-               || Integer.parsInt (objet.getString("soin"))== 0
-               || Integer.parsInt (objet.getString("soin"))== 100
-               || Integer.parsInt (objet.getString("soin"))== 200
-               || Integer.parsInt (objet.getString("soin"))==400
-               || Integer.parsInt (objet.getString("soin"))==500
-               || Integer.parsInt (objet.getString("soin"))==600
-               || Integer.parsInt (objet.getString("soin"))==700){
-           
-           soisEsValide = true;
-           
-       }      
-                       
-                       
-   }
-   
-   return soisEsValide;
-   
+        if (validerMontant(objet.getString("montant")) && validerLaDate(objet.getString("date"), objet.getString("mois"))) {
+            if ((objet.getString("soin") >= 300 && objet.getString("soin") <= 399)
+                    || objet.getString("soin") == 0
+                    || objet.getString("soin") == 100
+                    || objet.getString("soin") == 200
+                    || objet.getString("soin") == 400
+                    || objet.getString("soin") == 500
+                    || objet.getString("soin") == 600
+                    || objet.getString("soin") == 700) {
+
+                soisEsValide = true;
+
+            }
+
+        }
+
+        return soisEsValide;
+
     }
-                       
-                       
-                       
-       
-       
-       
-   
-       
-       
-       
-       
-          
-           
-           
-           
-          
-    
-    
-       
-        
-
-      
-
-    
 
     /**
      *
