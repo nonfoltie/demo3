@@ -277,8 +277,8 @@ public class GestionAssurance {
             for(int i = 0;i < tailleDuTableauReclam;i++) {
               tableauDesReclam.add((JSONObject) objet.getString("reclamation").getJSONobject(i));
               
-              typeSoin =  tableauDesReclam.getJSONObject(i).getString("soin");
-              dateDeSoin =  tableauDesReclam.getJSONObject(i).getString("date");
+              typeSoin      =  tableauDesReclam.getJSONObject(i).getString("soin");
+              dateDeSoin    =  tableauDesReclam.getJSONObject(i).getString("date");
               montantDuSoin =  tableauDesReclam.getJSONObject(i).getString("montant");
               if (validerMontant(montantDuSoin)
                       && validerLaDate(dateDeSoin,objet.getString("mois"))
@@ -294,7 +294,7 @@ public class GestionAssurance {
               {
              
                   
-        soisEsValide = true;          
+                 soisEsValide = true;          
                   
               }
                     
