@@ -19,13 +19,6 @@ import net.sf.json.JSONSerializer;
  */
 public class GestionAssurance {
 
-    public static final double TAUX_0_POUR_CENT = 0.00;
-    public static final double TAUX_25_POUR_CENT = 0.25;
-    public static final double TAUX_40_POUR_CENT = 0.4;
-    public static final double TAUX_50_POUR_CENT = 0.5;
-    public static final double TAUX_70_POUR_CENT = 0.7;
-    public static final double TAUX_90_POUR_CENT = 0.9;
-    public static final double TAUX_100_POUR_CENT = 1.00;
 
     /**
      *
@@ -318,7 +311,15 @@ public class GestionAssurance {
      */
     public static Double appliquerLesContrat(String contrat, Double montant, int numSoin) {
 
-        Double rembourssement = 0.0;
+         Double rembourssement = 0.0;
+         final double TAUX_0_POUR_CENT = 0.00;
+         final double TAUX_25_POUR_CENT = 0.25;
+         final double TAUX_40_POUR_CENT = 0.4;
+         final double TAUX_50_POUR_CENT = 0.5;
+         final double TAUX_70_POUR_CENT = 0.7;
+         final double TAUX_90_POUR_CENT = 0.9;
+         final double TAUX_100_POUR_CENT = 1.00;
+        
         switch (contrat) {
 
             case "A":
