@@ -268,15 +268,14 @@ public class GestionAssurance {
     public static boolean validerLesSoins(JSONObject objet, String mois) {
         int typeSoin = 0;
         boolean soisEsValide = false;
-        int tailleDuTableauReclam = objet.getString("reclamation").size();
-        String dateDeSoin = "";
-        String montantDuSoin =  "";
+        int tailleDuTableauReclam;
+        String dateDeSoin ;
+        String montantDuSoin ;
         JSONArray tableauDesReclam = new JSONArray();
-        
-               
+        if(objet!=null&& mois!=null){
+           tailleDuTableauReclam = objet.getString("reclamation").size();    
             for(int i = 0;i < tailleDuTableauReclam;i++) {
               tableauDesReclam.add((JSONObject) objet.getString("reclamation").getJSONobject(i));
-              
               typeSoin      =  tableauDesReclam.getJSONObject(i).getString("soin");
               dateDeSoin    =  tableauDesReclam.getJSONObject(i).getString("date");
               montantDuSoin =  tableauDesReclam.getJSONObject(i).getString("montant");
@@ -299,12 +298,13 @@ public class GestionAssurance {
               }
                     
         }
-        
+        }  
             
 
         return soisEsValide;
 
     }
+    
 
     /**
      *
