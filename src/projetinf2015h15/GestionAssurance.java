@@ -5,6 +5,7 @@
  */
 package projetinf2015h15;
 
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -272,22 +273,41 @@ public class GestionAssurance {
      * @return
      */
     public static boolean validerLesSoins(JSONObject objet, String mois) {
+        int typeSoin = 0;
         boolean soisEsValide = false;
-        if (validerMontant(objet.getString("montant")) && validerLaDate(objet.getString("date"), objet.getString("mois"))) {
-            if ((objet.getString("soin") >= 300 && objet.getString("soin") <= 399)
-                    || objet.getString("soin") == 0
-                    || objet.getString("soin") == 100
-                    || objet.getString("soin") == 200
-                    || objet.getString("soin") == 400
-                    || objet.getString("soin") == 500
-                    || objet.getString("soin") == 600
-                    || objet.getString("soin") == 700) {
-
-                soisEsValide = true;
-
-            }
-
+        int tailleDuTableauReclam = objet.getString("reclamation").size();
+        String dateDeSoin = "";
+        String montantDuSoin =  "";
+        JSONArray tableauDesReclam = new JSONArray();
+        
+               
+            for(int i = 0;i < tailleDuTableauReclam;i++) {
+              tableauDesReclam.add((JSONObject) objet.getString("reclamation").getJSONobject(i));
+              
+              typeSoin =  tableauDesReclam.getJSONObject(i).getString("soin");
+              dateDeSoin =  tableauDesReclam.getJSONObject(i).getString("date");
+              montantDuSoin =  tableauDesReclam.getJSONObject(i).getString("montant");
+              if (validerMontant(montantDuSoin)
+                      && validerLaDate(dateDeSoin,objet.getString("mois"))
+                      &&( (typeSoin>=300&&typeSoin<=399)
+                      || typeSoin == 0
+                      || typeSoin == 100
+                      || typeSoin == 200
+                      || typeSoin == 400
+                      || typeSoin == 500
+                      || typeSoin == 600
+                      || typeSoin == 700)
+                      )
+              {
+             
+                  
+        soisEsValide = true;          
+                  
+              }
+                    
         }
+        
+            
 
         return soisEsValide;
 
