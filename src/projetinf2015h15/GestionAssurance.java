@@ -266,35 +266,36 @@ public class GestionAssurance {
      * @return
      */
     public static boolean validerLesSoins(JSONObject objet, String mois) {
-        int typeSoin = 0;
+       
         boolean soisEsValide = false;
         int tailleDuTableauReclam;
         String dateDeSoin ;
         String montantDuSoin ;
         JSONArray tableauDesReclam = new JSONArray();
         if(objet!=null&& mois!=null){
-           tailleDuTableauReclam = objet.getString("reclamation").size();    
-            for(int i = 0;i < tailleDuTableauReclam;i++) {
-              tableauDesReclam.add((JSONObject) objet.getString("reclamation").getJSONobject(i));
-              typeSoin      =  tableauDesReclam.getJSONObject(i).getString("soin");
-              dateDeSoin    =  tableauDesReclam.getJSONObject(i).getString("date");
-              montantDuSoin =  tableauDesReclam.getJSONObject(i).getString("montant");
-              if (validerMontant(montantDuSoin)
-                      && validerLaDate(dateDeSoin,objet.getString("mois"))
-                      &&( (typeSoin>=300&&typeSoin<=399)
-                      || typeSoin == 0
-                      || typeSoin == 100
-                      || typeSoin == 200
-                      || typeSoin == 400
-                      || typeSoin == 500
-                      || typeSoin == 600
-                      || typeSoin == 700)
+          String  jsontext = objet.getString("reclamation");   
+          JSONArray root = (JSONArray)JSONSerializer.toJSON(jsontext);
+            for(int i = 0;i < root.size();i++) {
+            JSONObject documentSoin = root.getJSONObject(i);
+              if (validerMontant("montant")
+                      || validerLaDate(documentSoin.getString("date"),objet.getString("mois"))
+                      || (Integer.parseInt(documentSoin.getString("soin"))<300
+                      || Integer.parseInt(documentSoin.getString("soin"))<=399
+                      && Integer.parseInt(documentSoin.getString("soin")) != 0
+                      && Integer.parseInt(documentSoin.getString("soin")) != 100
+                      && Integer.parseInt(documentSoin.getString("soin")) != 200
+                      && Integer.parseInt(documentSoin.getString("soin")) != 400
+                      && Integer.parseInt(documentSoin.getString("soin")) != 500
+                      && Integer.parseInt(documentSoin.getString("soin")) != 600
+                      && Integer.parseInt(documentSoin.getString("soin")) != 700)
                       )
               {
              
                   
-                 soisEsValide = true;          
-                  
+                 soisEsValide = false;          
+                 i=root.size();
+              }else{
+                  soisEsValide = true;  
               }
                     
         }
