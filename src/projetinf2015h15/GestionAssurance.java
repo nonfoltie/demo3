@@ -205,6 +205,26 @@ public class GestionAssurance {
         }
         return reponse;
     }
+    /**
+     *
+     * @author Groupe 15
+     * retourne la liste des dates des soins.
+     * @param numSoin
+     * @return vrai si le numéro du soin est valide. Sinon, faux.
+    */
+     public static boolean validerNumeroSoin(int numSoin){
+         
+         boolean reponse = false;
+        
+       if((numSoin == 0) || (numSoin == 100) || (numSoin == 200) || (numSoin == 400)
+               || (numSoin >= 300 && numSoin <= 399) || (numSoin == 500)
+               || (numSoin == 600) || (numSoin == 700)){
+          
+           reponse = true;
+       }
+       
+       return reponse;
+    } 
 
     /**
      *
@@ -276,7 +296,7 @@ public class GestionAssurance {
            tailleDuTableauReclam = objet.getString("reclamation").size();    
             for(int i = 0;i < tailleDuTableauReclam;i++) {
               tableauDesReclam.add((JSONObject) objet.getString("reclamation").getJSONobject(i));
-              typeSoin      =  tableauDesReclam.getJSONObject(i).getString("soin");
+              typeSoin = tableauDesReclam.getJSONObject(i).getString("soin");
               dateDeSoin    =  tableauDesReclam.getJSONObject(i).getString("date");
               montantDuSoin =  tableauDesReclam.getJSONObject(i).getString("montant");
               if (validerMontant(montantDuSoin)
