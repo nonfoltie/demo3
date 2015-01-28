@@ -5,7 +5,6 @@
  */
 package projetinf2015h15;
 
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,7 +18,6 @@ import net.sf.json.JSONSerializer;
  * @author Groupe 15
  */
 public class GestionAssurance {
-
 
     /**
      *
@@ -266,46 +264,37 @@ public class GestionAssurance {
      * @return
      */
     public static boolean validerLesSoins(JSONObject objet, String mois) {
-       
         boolean soisEsValide = false;
-        int tailleDuTableauReclam;
-        String dateDeSoin ;
-        String montantDuSoin ;
-        JSONArray tableauDesReclam = new JSONArray();
-        if(objet!=null&& mois!=null){
-          String  jsontext = objet.getString("reclamation");   
-          JSONArray root = (JSONArray)JSONSerializer.toJSON(jsontext);
-            for(int i = 0;i < root.size();i++) {
-            JSONObject documentSoin = root.getJSONObject(i);
-              if (validerMontant("montant")
-                      || validerLaDate(documentSoin.getString("date"),objet.getString("mois"))
-                      || (Integer.parseInt(documentSoin.getString("soin"))<300
-                      || Integer.parseInt(documentSoin.getString("soin"))<=399
-                      && Integer.parseInt(documentSoin.getString("soin")) != 0
-                      && Integer.parseInt(documentSoin.getString("soin")) != 100
-                      && Integer.parseInt(documentSoin.getString("soin")) != 200
-                      && Integer.parseInt(documentSoin.getString("soin")) != 400
-                      && Integer.parseInt(documentSoin.getString("soin")) != 500
-                      && Integer.parseInt(documentSoin.getString("soin")) != 600
-                      && Integer.parseInt(documentSoin.getString("soin")) != 700)
-                      )
-              {
-             
-                  
-                 soisEsValide = false;          
-                 i=root.size();
-              }else{
-                  soisEsValide = true;  
-              }
-                    
+       
+        if (objet != null && mois != null) {
+            String jsontext = objet.getString("reclamation");
+            JSONArray root = (JSONArray) JSONSerializer.toJSON(jsontext);
+            for (int i = 0; i < root.size(); i++) {
+                JSONObject documentSoin = root.getJSONObject(i);
+                if (validerMontant("montant")
+                        || validerLaDate(documentSoin.getString("date"), objet.getString("mois"))
+                        || (Integer.parseInt(documentSoin.getString("soin")) < 300
+                        || Integer.parseInt(documentSoin.getString("soin")) <= 399
+                        && Integer.parseInt(documentSoin.getString("soin")) != 0
+                        && Integer.parseInt(documentSoin.getString("soin")) != 100
+                        && Integer.parseInt(documentSoin.getString("soin")) != 200
+                        && Integer.parseInt(documentSoin.getString("soin")) != 400
+                        && Integer.parseInt(documentSoin.getString("soin")) != 500
+                        && Integer.parseInt(documentSoin.getString("soin")) != 600
+                        && Integer.parseInt(documentSoin.getString("soin")) != 700)) {
+
+                    soisEsValide = false;
+                    i = root.size();
+                } else {
+                    soisEsValide = true;
+                }
+
+            }
         }
-        }  
-            
 
         return soisEsValide;
 
     }
-    
 
     /**
      *
@@ -332,15 +321,15 @@ public class GestionAssurance {
      */
     public static Double appliquerLesContrat(String contrat, Double montant, int numSoin) {
 
-         Double rembourssement = 0.0;
-         final double TAUX_0_POUR_CENT = 0.00;
-         final double TAUX_25_POUR_CENT = 0.25;
-         final double TAUX_40_POUR_CENT = 0.4;
-         final double TAUX_50_POUR_CENT = 0.5;
-         final double TAUX_70_POUR_CENT = 0.7;
-         final double TAUX_90_POUR_CENT = 0.9;
-         final double TAUX_100_POUR_CENT = 1.00;
-        
+        Double rembourssement = 0.0;
+        final double TAUX_0_POUR_CENT = 0.00;
+        final double TAUX_25_POUR_CENT = 0.25;
+        final double TAUX_40_POUR_CENT = 0.4;
+        final double TAUX_50_POUR_CENT = 0.5;
+        final double TAUX_70_POUR_CENT = 0.7;
+        final double TAUX_90_POUR_CENT = 0.9;
+        final double TAUX_100_POUR_CENT = 1.00;
+
         switch (contrat) {
 
             case "A":
