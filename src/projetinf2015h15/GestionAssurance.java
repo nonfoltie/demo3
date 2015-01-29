@@ -180,13 +180,18 @@ public class GestionAssurance {
     public static boolean validerFormatMois(String mois) {
 
         boolean reponse = false;
+        final int ANNEE_MAX = 2015;
+        final int ANNEE_MIN = 1;
+        final int MOIS_MIN = 1;
+        final int MOIS_MAX = 12;
         int i = 0;
         int j;
 
         if (mois != null && (mois.trim().length() == 7)
-                && Integer.parseInt(mois.substring(0, 4)) >= 1
-                && Integer.parseInt(mois.substring(5, 7)) >= 1
-                && Integer.parseInt(mois.substring(5, 7)) <= 12) {
+                && Integer.parseInt(mois.substring(0, 4)) >= ANNEE_MIN
+                && Integer.parseInt(mois.substring(0, 4))<= ANNEE_MAX
+                && Integer.parseInt(mois.substring(5, 7)) >= MOIS_MIN
+                && Integer.parseInt(mois.substring(5, 7)) <= MOIS_MAX) {
 
             j = mois.trim().length();
 
@@ -217,16 +222,16 @@ public class GestionAssurance {
         boolean valide;
         int i = 0;
 
-        if (date != null && date.length() >= 7) {
+        if (date != null && date.trim().length() >= 7) {
 
             valide = validerFormatMois(date.trim().substring(0, 7));
 
             if (valide) {
 
-                while (i < mois.length() && (date.charAt(i) == mois.charAt(i))) {
+                while (i < mois.trim().length() && (date.trim().charAt(i) == mois.trim().charAt(i))) {
                     i++;
                 }
-                reponse = i == mois.length();
+                reponse = i == mois.trim().length();
             }
         }
         return reponse;
@@ -245,7 +250,7 @@ public class GestionAssurance {
         if (montant != null && montant.trim().charAt(montant.trim().length() - 1) == '$') {
 
             try {
-                Double.parseDouble(montant.trim().substring(0, montant.trim().length() - 2));
+                Double.parseDouble(montant.trim().substring(0, montant.trim().length() - 1));
                 montantEstValide = true;
 
             } catch (NumberFormatException e) {
