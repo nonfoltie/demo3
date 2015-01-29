@@ -265,33 +265,19 @@ public class GestionAssurance {
      */
     public static boolean validerLesSoins(JSONObject objet, String mois) {
         boolean soisEsValide = false;
-       
+        int i = 0;
         if (objet != null && mois != null) {
             String jsontext = objet.getString("reclamation");
             JSONArray root = (JSONArray) JSONSerializer.toJSON(jsontext);
-            for (int i = 0; i < root.size(); i++) {
-                JSONObject documentSoin = root.getJSONObject(i);
-                if (validerMontant("montant")
-                        || validerLaDate(documentSoin.getString("date"), objet.getString("mois"))
-                        || (Integer.parseInt(documentSoin.getString("soin")) < 300
-                        || Integer.parseInt(documentSoin.getString("soin")) <= 399
-                        && Integer.parseInt(documentSoin.getString("soin")) != 0
-                        && Integer.parseInt(documentSoin.getString("soin")) != 100
-                        && Integer.parseInt(documentSoin.getString("soin")) != 200
-                        && Integer.parseInt(documentSoin.getString("soin")) != 400
-                        && Integer.parseInt(documentSoin.getString("soin")) != 500
-                        && Integer.parseInt(documentSoin.getString("soin")) != 600
-                        && Integer.parseInt(documentSoin.getString("soin")) != 700)) {
 
-                    soisEsValide = false;
-                    i = root.size();
-                } else {
-                    soisEsValide = true;
-                }
+            while (i < root.size() && validerMontant(root.getJSONObject(i).getString("montant"))
+                    && validerLaDate(root.getJSONObject(i).getString("date"), objet.getString("mois"))
+                    && validerLeSoin(root.getJSONObject(i).getString("soin"))) {
 
+                i++;
             }
+            soisEsValide = i == root.size();
         }
-
         return soisEsValide;
 
     }
@@ -474,6 +460,20 @@ public class GestionAssurance {
         objetJson.accumulate("reclamations", liste);
 
         return objetJson.toString();
+    }
+
+    private static boolean validerLeSoin(String soin) {
+
+        boolean soinValide = ((Integer.parseInt(soin) >= 300 && Integer.parseInt(soin) <= 399)
+                || Integer.parseInt(soin) == 0
+                || Integer.parseInt(soin) == 100
+                || Integer.parseInt(soin) == 200
+                || Integer.parseInt(soin) == 400
+                || Integer.parseInt(soin) == 500
+                || Integer.parseInt(soin) == 600
+                || Integer.parseInt(soin) == 700);
+
+        return soinValide;
     }
 
 }
