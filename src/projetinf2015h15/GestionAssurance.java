@@ -6,6 +6,7 @@
 package projetinf2015h15;
 
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class GestionAssurance {
         String texteJson = null;
 
         try {
-            texteJson = FileReader.loadFileIntoString("resources/inputFile.json", "UTF-8");
+            texteJson = FileReader.loadFileIntoString(fichierEntree, "UTF-8");
         } catch (FileNotFoundException e) {
             return texteJson;
         } catch (Exception e) {
@@ -325,6 +326,22 @@ public class GestionAssurance {
         uneReclamation.discard("montant");
         uneReclamation.accumulate("montant", leMontant);
 
+    }
+    
+    /**
+     *
+     * @author Groupe 15.
+     * @param nomFichier
+     * @param objet
+     * @throws java.io.IOException
+     */
+    public static void ecrireFichierSurDisque( String nomFichier, String objet) throws IOException{
+        
+        try (FileWriter fichierJson = new FileWriter(nomFichier)) {
+            fichierJson.write(objet);
+            fichierJson.flush();
+            fichierJson.close();
+        }
     }
 
     /**

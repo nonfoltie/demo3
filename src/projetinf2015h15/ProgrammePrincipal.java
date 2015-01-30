@@ -5,7 +5,6 @@
  */
 package projetinf2015h15;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import net.sf.json.JSONObject;
@@ -68,18 +67,7 @@ public class ProgrammePrincipal {
             } 
             
             String objetJson = creationFichierSortie(numClient, contrat, mois,listeReclamation);
-            
-            try {
-                 
-                FileWriter fichierJson = new FileWriter("c:\\test.json");
-                fichierJson.write(objetJson);
-                fichierJson.flush();
-                fichierJson.close();
- 
-            } catch (IOException e) {
-                e.getMessage();
-            }
-             
+            ecrireFichierSurDisque( fichierSortie, objetJson);
             System.out.println(objetJson);
             
         }else {
