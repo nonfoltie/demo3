@@ -5,7 +5,6 @@
  */
 package projetinf2015h15;
 
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,7 +18,6 @@ import net.sf.json.JSONSerializer;
  * @author Groupe 15
  */
 public class GestionAssurance {
-
 
     /**
      *
@@ -184,13 +182,18 @@ public class GestionAssurance {
     public static boolean validerFormatMois(String mois) {
 
         boolean reponse = false;
+        final int ANNEE_MAX = 2015;
+        final int ANNEE_MIN = 1;
+        final int MOIS_MIN = 1;
+        final int MOIS_MAX = 12;
         int i = 0;
         int j;
 
         if (mois != null && (mois.trim().length() == 7)
-                && Integer.parseInt(mois.substring(0, 4)) >= 1
-                && Integer.parseInt(mois.substring(5, 7)) >= 1
-                && Integer.parseInt(mois.substring(5, 7)) <= 12) {
+                && Integer.parseInt(mois.substring(0, 4)) >= ANNEE_MIN
+                && Integer.parseInt(mois.substring(0, 4))<= ANNEE_MAX
+                && Integer.parseInt(mois.substring(5, 7)) >= MOIS_MIN
+                && Integer.parseInt(mois.substring(5, 7)) <= MOIS_MAX) {
 
             j = mois.trim().length();
 
@@ -210,7 +213,7 @@ public class GestionAssurance {
     /**
      *
      * @author sergedelil
-     * retourne la liste des dates des soins.
+     * 
      * @param numSoin
      * @return vrai si le numéro du soin est valide. Sinon, faux.
     */
@@ -240,16 +243,16 @@ public class GestionAssurance {
         boolean valide;
         int i = 0;
 
-        if (date != null && date.length() >= 7) {
+        if (date != null && date.trim().length() >= 7) {
 
             valide = validerFormatMois(date.trim().substring(0, 7));
 
             if (valide) {
 
-                while (i < mois.length() && (date.charAt(i) == mois.charAt(i))) {
+                while (i < mois.trim().length() && (date.trim().charAt(i) == mois.trim().charAt(i))) {
                     i++;
                 }
-                reponse = i == mois.length();
+                reponse = i == mois.trim().length();
             }
         }
         return reponse;
@@ -288,7 +291,7 @@ public class GestionAssurance {
      */
     public static boolean validerLesSoins(JSONObject objet, String mois) {
        
-        boolean reponse = false;
+        boolean soinsValide = false;
         int compteur = 0;
        
         if (objet != null && mois != null){
@@ -304,11 +307,11 @@ public class GestionAssurance {
             
                 compteur++;    
             }
-            reponse = compteur == tableauReclamation.size();
+            soinsValide = compteur == tableauReclamation.size();
         }
-        return reponse;
+        return soinsValide;
+
     }
-    
 
     /**
      *
@@ -335,15 +338,15 @@ public class GestionAssurance {
      */
     public static Double appliquerLesContrat(String contrat, Double montant, int numSoin) {
 
-         Double rembourssement = 0.0;
-         final double TAUX_0_POUR_CENT = 0.00;
-         final double TAUX_25_POUR_CENT = 0.25;
-         final double TAUX_40_POUR_CENT = 0.4;
-         final double TAUX_50_POUR_CENT = 0.5;
-         final double TAUX_70_POUR_CENT = 0.7;
-         final double TAUX_90_POUR_CENT = 0.9;
-         final double TAUX_100_POUR_CENT = 1.00;
-        
+        Double rembourssement = 0.0;
+        final double TAUX_0_POUR_CENT = 0.00;
+        final double TAUX_25_POUR_CENT = 0.25;
+        final double TAUX_40_POUR_CENT = 0.4;
+        final double TAUX_50_POUR_CENT = 0.5;
+        final double TAUX_70_POUR_CENT = 0.7;
+        final double TAUX_90_POUR_CENT = 0.9;
+        final double TAUX_100_POUR_CENT = 1.00;
+
         switch (contrat) {
 
             case "A":
@@ -487,12 +490,11 @@ public class GestionAssurance {
         objetJson.accumulate("mois", mois);
         objetJson.accumulate("reclamations", liste);
         
-        
-        
-
         return objetJson.toString();
     }
     
     
+
+   
 
 }
