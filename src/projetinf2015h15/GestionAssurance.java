@@ -38,7 +38,6 @@ public class GestionAssurance {
         } catch (Exception e) {
             return texteJson;
         }
-
         return texteJson;
     }
 
@@ -509,9 +508,4 @@ public class GestionAssurance {
         
         return objetJson.toString();
     }
-    
-    
-
-   
-
-}
+    }

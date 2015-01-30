@@ -9,18 +9,6 @@ import java.io.IOException;
 import java.util.List;
 import net.sf.json.JSONObject;
 import static projetinf2015h15.GestionAssurance.*;
-/*import static projetinf2015h15.GestionAssurance.appliquerLesContrat;
-import static projetinf2015h15.GestionAssurance.creationFichierSortie;
-import static projetinf2015h15.GestionAssurance.formaterObjet;
-import static projetinf2015h15.GestionAssurance.getCategorieContrat;
-import static projetinf2015h15.GestionAssurance.getMois;
-import static projetinf2015h15.GestionAssurance.getNumeroClient;
-import static projetinf2015h15.GestionAssurance.listerLesReclamations;
-import static projetinf2015h15.GestionAssurance.modifierLeSoin;
-import static projetinf2015h15.GestionAssurance.validerContrat;
-import static projetinf2015h15.GestionAssurance.validerFormatMois;
-import static projetinf2015h15.GestionAssurance.validerLesSoins;
-import static projetinf2015h15.GestionAssurance.validerNumeroClient;*/
 
 /**
  *
