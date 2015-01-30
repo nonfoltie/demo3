@@ -5,10 +5,12 @@
  */
 package projetinf2015h15;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import net.sf.json.JSONObject;
-import static projetinf2015h15.GestionAssurance.appliquerLesContrat;
+import static projetinf2015h15.GestionAssurance.*;
+/*import static projetinf2015h15.GestionAssurance.appliquerLesContrat;
 import static projetinf2015h15.GestionAssurance.creationFichierSortie;
 import static projetinf2015h15.GestionAssurance.formaterObjet;
 import static projetinf2015h15.GestionAssurance.getCategorieContrat;
@@ -19,7 +21,7 @@ import static projetinf2015h15.GestionAssurance.modifierLeSoin;
 import static projetinf2015h15.GestionAssurance.validerContrat;
 import static projetinf2015h15.GestionAssurance.validerFormatMois;
 import static projetinf2015h15.GestionAssurance.validerLesSoins;
-import static projetinf2015h15.GestionAssurance.validerNumeroClient;
+import static projetinf2015h15.GestionAssurance.validerNumeroClient;*/
 
 /**
  *
@@ -33,15 +35,15 @@ public class ProgrammePrincipal {
      */
     public static void main(String[] args) throws IOException {
         
-        String fichierEntree = "resources/inputFile.json";
-        String fichierSortie = "output.json";
-        
         if(args.length != 2){
             System.out.println("Données invalides");
             System.exit(0);
         }
         
-        JSONObject objet = formaterObjet();
+        String fichierEntree = args[0];
+        String fichierSortie = args[1];
+        
+        JSONObject objet = formaterObjet(fichierEntree);
         String numClient = getNumeroClient(objet);
         String contrat = getCategorieContrat(objet);
         String mois = getMois(objet);
@@ -66,6 +68,18 @@ public class ProgrammePrincipal {
             } 
             
             String objetJson = creationFichierSortie(numClient, contrat, mois,listeReclamation);
+            
+            try {
+                 
+                FileWriter fichierJson = new FileWriter("c:\\test.json");
+                fichierJson.write(objetJson);
+                fichierJson.flush();
+                fichierJson.close();
+ 
+            } catch (IOException e) {
+                e.getMessage();
+            }
+             
             System.out.println(objetJson);
             
         }else {

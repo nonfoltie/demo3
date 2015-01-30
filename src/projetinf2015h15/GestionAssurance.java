@@ -24,10 +24,11 @@ public class GestionAssurance {
     /**
      *
      * @author Groupe 15 Changement du fichier d'entrée.
+     * @param fichierEntree
      * @return
      * @throws java.io.IOException
      */
-    public static String chargerFichier() throws IOException {
+    public static String chargerFichier(String fichierEntree) throws IOException {
 
         String texteJson = null;
 
@@ -45,12 +46,13 @@ public class GestionAssurance {
     /**
      *
      * @author Groupe 15 Création de l'objet.
+     * @param fichierEntree
      * @return
      * @throws java.io.IOException
      */
-    public static JSONObject formaterObjet() throws IOException {
+    public static JSONObject formaterObjet(String fichierEntree) throws IOException {
 
-        String leTexte = chargerFichier();
+        String leTexte = chargerFichier(fichierEntree);
         JSONObject objActuel = null;
 
         if (leTexte != null) {
@@ -205,7 +207,26 @@ public class GestionAssurance {
         }
         return reponse;
     }
-
+    /**
+     *
+     * @author sergedelil
+     * retourne la liste des dates des soins.
+     * @param numSoin
+     * @return vrai si le numéro du soin est valide. Sinon, faux.
+    */
+     public static boolean validerNumeroSoin(int numSoin){
+         
+         boolean reponse = false;
+        
+       if((numSoin == 0) || (numSoin == 100) || (numSoin == 200) || (numSoin == 400)
+               || (numSoin >= 300 && numSoin <= 399) || (numSoin == 500)
+               || (numSoin == 600) || (numSoin == 700)){
+          
+           reponse = true;
+       }
+       
+       return reponse;
+    } 
     /**
      *
      * @author Groupe 15 retourne la liste des dates des soins.
@@ -247,7 +268,7 @@ public class GestionAssurance {
         if (montant != null && montant.trim().charAt(montant.trim().length() - 1) == '$') {
 
             try {
-                Double.parseDouble(montant.trim().substring(0, montant.trim().length() - 2));
+                Double.parseDouble(montant.trim().substring(0, montant.trim().length() - 1));
                 montantEstValide = true;
 
             } catch (NumberFormatException e) {
@@ -267,43 +288,25 @@ public class GestionAssurance {
      */
     public static boolean validerLesSoins(JSONObject objet, String mois) {
        
-        boolean soisEsValide = false;
-        int tailleDuTableauReclam;
-        String dateDeSoin ;
-        String montantDuSoin ;
-        JSONArray tableauDesReclam = new JSONArray();
-        if(objet!=null&& mois!=null){
-          String  jsontext = objet.getString("reclamation");   
-          JSONArray root = (JSONArray)JSONSerializer.toJSON(jsontext);
-            for(int i = 0;i < root.size();i++) {
-            JSONObject documentSoin = root.getJSONObject(i);
-              if (validerMontant("montant")
-                      || validerLaDate(documentSoin.getString("date"),objet.getString("mois"))
-                      || (Integer.parseInt(documentSoin.getString("soin"))<300
-                      || Integer.parseInt(documentSoin.getString("soin"))<=399
-                      && Integer.parseInt(documentSoin.getString("soin")) != 0
-                      && Integer.parseInt(documentSoin.getString("soin")) != 100
-                      && Integer.parseInt(documentSoin.getString("soin")) != 200
-                      && Integer.parseInt(documentSoin.getString("soin")) != 400
-                      && Integer.parseInt(documentSoin.getString("soin")) != 500
-                      && Integer.parseInt(documentSoin.getString("soin")) != 600
-                      && Integer.parseInt(documentSoin.getString("soin")) != 700)
-                      )
-              {
-             
-                  
-                 soisEsValide = false;          
-                 i=root.size();
-              }else{
-                  soisEsValide = true;  
-              }
-                    
-        }
-        }  
+        boolean reponse = false;
+        int compteur = 0;
+       
+        if (objet != null && mois != null){
             
-
-        return soisEsValide;
-
+            String reclamation = objet.getString("reclamations");
+            JSONArray tableauReclamation = (JSONArray) JSONSerializer.toJSON(reclamation);
+            JSONObject objetCourant = tableauReclamation.getJSONObject(compteur);
+            
+            while( compteur < tableauReclamation.size() 
+                    && validerLaDate(objetCourant.getString("date"), mois)
+                    && validerMontant(objetCourant.getString("montant"))
+                    && validerNumeroSoin(objetCourant.getInt("soin"))){
+            
+                compteur++;    
+            }
+            reponse = compteur == tableauReclamation.size();
+        }
+        return reponse;
     }
     
 
@@ -483,8 +486,13 @@ public class GestionAssurance {
         objetJson.accumulate("contrat", contrat);
         objetJson.accumulate("mois", mois);
         objetJson.accumulate("reclamations", liste);
+        
+        
+        
 
         return objetJson.toString();
     }
+    
+    
 
 }
