@@ -7,6 +7,7 @@ package projetinf2015h15;
 
 import java.io.IOException;
 import java.util.List;
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import static projetinf2015h15.GestionAssurance.*;
 
@@ -30,11 +31,21 @@ public class ProgrammePrincipal {
         String fichierEntree = args[0];
         String fichierSortie = args[1];
         
-        JSONObject objet = formaterObjet(fichierEntree);
-        String numClient = getNumeroClient(objet);
-        String contrat = getCategorieContrat(objet);
-        String mois = getMois(objet);
+        JSONObject objet;
+        String numClient = "";
+        String contrat  = "";
+        String mois = "";
         Double leRembourssement;
+        
+        try{
+            objet = formaterObjet(fichierEntree);
+            numClient = getNumeroClient(objet);
+            contrat = getCategorieContrat(objet);
+            mois = getMois(objet);
+            
+        }catch(JSONException e){
+            objet = null;
+        }
         
         if (objet != null && validerNumeroClient(numClient)
                 && validerContrat(contrat) && validerFormatMois(mois)

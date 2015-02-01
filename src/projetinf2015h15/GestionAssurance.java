@@ -30,14 +30,14 @@ public class GestionAssurance {
      */
     public static String chargerFichier(String fichierEntree) throws IOException {
 
-        String texteJson = null;
+        String texteJson;
 
         try {
             texteJson = FileReader.loadFileIntoString(fichierEntree, "UTF-8");
         } catch (FileNotFoundException e) {
-            e.getMessage();
+            texteJson = null;
         } catch (Exception e) {
-            e.getMessage();
+            texteJson = null;
         }
         return texteJson;
     }
@@ -292,26 +292,8 @@ public class GestionAssurance {
      */
     public static boolean validerLesSoins(JSONObject objet, String mois) {
        
-        boolean soinsValide = false;
-        int compteur = 0;
-       
-        if (objet != null && mois != null){
-            
-            String reclamation = objet.getString("reclamations");
-            JSONArray tableauReclamation = (JSONArray) JSONSerializer.toJSON(reclamation);
-            JSONObject objetCourant = tableauReclamation.getJSONObject(compteur);
-            
-            while( compteur < tableauReclamation.size() 
-                    && validerLaDate(objetCourant.getString("date"), mois)
-                    && validerMontant(objetCourant.getString("montant"))
-                    && validerNumeroSoin(objetCourant.getInt("soin"))){
-            
-                compteur++;    
-            }
-            soinsValide = compteur == tableauReclamation.size();
-        }
-        return soinsValide;
-
+        
+        return false;
     }
 
     /**
