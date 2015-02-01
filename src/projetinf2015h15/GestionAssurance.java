@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -34,9 +35,9 @@ public class GestionAssurance {
         try {
             texteJson = FileReader.loadFileIntoString(fichierEntree, "UTF-8");
         } catch (FileNotFoundException e) {
-            return texteJson;
+            e.getMessage();
         } catch (Exception e) {
-            return texteJson;
+            e.getMessage();
         }
         return texteJson;
     }
