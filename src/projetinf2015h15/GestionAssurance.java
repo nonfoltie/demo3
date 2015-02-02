@@ -292,10 +292,30 @@ public class GestionAssurance {
      * @param mois
      * @return
      */
-    public static boolean validerLesSoins(JSONObject objet, String mois) {
-       
-        
-        return false;
+public static boolean validerLesSoins(JSONObject objet, String mois) {
+
+        boolean soinsValide = false;
+        int compteurSoins = 0;
+
+        if (objet != null && mois != null){
+
+            String reclamation = objet.getString("reclamations");
+            JSONArray tableauReclamation = (JSONArray) JSONSerializer.toJSON(reclamation);
+
+            for(int i = 0; i < tableauReclamation.size(); i++ ){
+
+                JSONObject objetCourant = tableauReclamation.getJSONObject(i);
+
+                if(validerLaDate(objetCourant.getString("date"), mois)
+                        && validerMontant(objetCourant.getString("montant"))
+                        && validerNumeroSoin(objetCourant.getInt("soin"))){
+
+                    compteurSoins++;
+                }
+            }
+            soinsValide = compteurSoins == tableauReclamation.size();
+        }
+        return soinsValide;
     }
 
     /**
