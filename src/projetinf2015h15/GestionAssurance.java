@@ -514,7 +514,7 @@ public static boolean validerLesSoins(JSONObject objet, String mois) {
         return objetJson.toString();
     }
 
-    static void traitementReclamations(String fichierEntree, String fichierSortie) throws NumberFormatException, IOException {
+    public static void traitementReclamations(String fichierEntree, String fichierSortie) throws NumberFormatException, IOException {
         JSONObject objet;
         String numClient = "";
         String contrat = "";
