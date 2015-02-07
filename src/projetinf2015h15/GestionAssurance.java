@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
@@ -46,7 +47,7 @@ public class GestionAssurance {
 
     /**
      *
-     * @author Groupe 15 Création de l'objet.
+     * @author Groupe 15.
      * @param fichierEntree
      * @return
      * @throws java.io.IOException
@@ -160,7 +161,7 @@ public class GestionAssurance {
     }
 
     /**
-     * @author Groupe 15 retourne la liste des dates des soins.
+     * @author Groupe 15.
      * @param contrat
      * @return vrai si le contrat est valide. Sinon, faux.
      */
@@ -235,10 +236,10 @@ public class GestionAssurance {
     } 
     /**
      *
-     * @author Groupe 15 retourne la liste des dates des soins.
+     * @author Groupe 15.
      * @param date
      * @param mois
-     * @return
+     * @return retourne vrai si la date est valide, sinon, faux.
      */
     public static boolean validerLaDate(String date, String mois) {
 
@@ -263,9 +264,9 @@ public class GestionAssurance {
 
     /**
      *
-     * @author Groupe 15 retourne la liste des dates des soins.
+     * @author Groupe 15.
      * @param montant
-     * @return
+     * @return vrai si le montant est valide. Sinon, faux.
      */
     public static boolean validerMontant(String montant) {
 
@@ -287,10 +288,10 @@ public class GestionAssurance {
 
     /**
      *
-     * @author Groupe 15 retourne le montant du remboursement.
+     * @author Groupe 15.
      * @param objet
      * @param mois
-     * @return
+     * @return vrai si les soins sont valides. Sinon, faux.
      */
 public static boolean validerLesSoins(JSONObject objet, String mois) {
 
@@ -350,12 +351,11 @@ public static boolean validerLesSoins(JSONObject objet, String mois) {
 
     /**
      *
-     * @author Groupe 15 retourne le rembourssement du soin calcule selon le
-     * contrat, le montant et le numero de soin.
+     * @author Groupe 15.
      * @param contrat
      * @param montant
      * @param numSoin
-     * @return le rembourcement
+     * @return le montant du rembourcement
      */
     public static Double appliquerLesContrat(String contrat, Double montant, int numSoin) {
 
@@ -494,7 +494,7 @@ public static boolean validerLesSoins(JSONObject objet, String mois) {
 
     /**
      *
-     * @author Groupe 15 retourne la liste des dates des soins.
+     * @author Groupe 15.
      * @param numClient
      * @param contrat
      * @param mois
@@ -512,5 +512,37 @@ public static boolean validerLesSoins(JSONObject objet, String mois) {
         objetJson.accumulate("reclamations", liste);
         
         return objetJson.toString();
+    }
+
+    static void traitementReclamations(String fichierEntree, String fichierSortie) throws NumberFormatException, IOException {
+        JSONObject objet;
+        String numClient = "";
+        String contrat = "";
+        String mois = "";
+        Double leRembourssement;
+        try {
+            objet = formaterObjet(fichierEntree);
+            numClient = getNumeroClient(objet);
+            contrat = getCategorieContrat(objet);
+            mois = getMois(objet);
+        } catch (JSONException e) {
+            objet = null;
+        }
+        if (objet != null && validerNumeroClient(numClient) && validerContrat(contrat) && validerFormatMois(mois) && validerLesSoins(objet, mois)) {
+            List<JSONObject> listeReclamation = listerLesReclamations(objet);
+            for (JSONObject uneReclamation : listeReclamation) {
+                int numSoin = uneReclamation.getInt("soin");
+                String chaineMontant = uneReclamation.getString("montant");
+                int indiceFin = chaineMontant.trim().length();
+                Double montant = Double.parseDouble(chaineMontant.substring(0, indiceFin - 1));
+                leRembourssement = appliquerLesContrat(contrat, montant, numSoin);
+                modifierLeSoin(leRembourssement, uneReclamation);
+            }
+            String objetJson = creationFichierSortie(numClient, contrat, mois, listeReclamation);
+            ecrireFichierSurDisque(fichierSortie, objetJson);
+            System.out.println(objetJson);
+        } else {
+            System.out.println("Données invalides");
+        }
     }
     }
