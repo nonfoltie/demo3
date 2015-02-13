@@ -365,8 +365,6 @@ public static boolean validerLesSoins(JSONObject objet, String mois) {
      */
     public static Double appliquerLesContrat(String contrat, Double montant, int numSoin) {
         
-        
-        
         Double rembourssement = 0.0;
         final double TAUX_25_POUR_CENT = 0.25;
         final double TAUX_40_POUR_CENT = 0.40;
