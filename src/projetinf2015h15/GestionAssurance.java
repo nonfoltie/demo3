@@ -98,6 +98,19 @@ public class GestionAssurance {
         }
         return leContrat;
     }
+    
+    
+
+
+    public static String getCategorieDossier(JSONObject objActuel) {
+
+        String leDossier = null;
+
+        if (objActuel != null) {
+            leDossier = objActuel.getString("dossier");
+        }
+        return leDossier;
+    }
 
     /**
      *
