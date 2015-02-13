@@ -11,6 +11,8 @@ package projetinf2015h15;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 import net.sf.json.JSONArray;
@@ -326,8 +328,12 @@ public static boolean validerLesSoins(JSONObject objet, String mois) {
      * @param uneReclamation
      */
     public static void modifierLeSoin(Double rembourssement, JSONObject uneReclamation) {
-
-        String leMontant = rembourssement + "$";
+        
+        DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+        dfs.setDecimalSeparator('.');
+        DecimalFormat df = new DecimalFormat("0.00" , dfs); 
+        
+        String leMontant = df.format(rembourssement) + "$";
         uneReclamation.discard("montant");
         uneReclamation.accumulate("montant", leMontant);
 
@@ -358,25 +364,25 @@ public static boolean validerLesSoins(JSONObject objet, String mois) {
      * @return le montant du rembourcement
      */
     public static Double appliquerLesContrat(String contrat, Double montant, int numSoin) {
-
+        
+        
+        
         Double rembourssement = 0.0;
-        final double TAUX_0_POUR_CENT = 0.00;
         final double TAUX_25_POUR_CENT = 0.25;
-        final double TAUX_40_POUR_CENT = 0.4;
-        final double TAUX_50_POUR_CENT = 0.5;
-        final double TAUX_70_POUR_CENT = 0.7;
-        final double TAUX_90_POUR_CENT = 0.9;
-        final double TAUX_100_POUR_CENT = 1.00;
+        final double TAUX_40_POUR_CENT = 0.40;
+        final double TAUX_50_POUR_CENT = 0.50;
+        final double TAUX_70_POUR_CENT = 0.70;
+        final double TAUX_90_POUR_CENT = 0.90;
 
         switch (contrat) {
-
+        
             case "A":
                 if (numSoin == 0 || numSoin == 100 || numSoin == 200 || numSoin == 500) {
                     rembourssement = montant * TAUX_25_POUR_CENT;
 
                 } else if ((numSoin >= 300 && numSoin <= 399) || (numSoin == 400)
                         || (numSoin == 700)) {
-                    rembourssement = montant * TAUX_0_POUR_CENT;
+                    rembourssement = 0.00;
 
                 } else {
                     rembourssement = montant * TAUX_40_POUR_CENT;
@@ -386,41 +392,42 @@ public static boolean validerLesSoins(JSONObject objet, String mois) {
 
             case "B":
 
-                if (numSoin == 0 || numSoin == 500) {
+                if (numSoin == 100 || numSoin == 500) {
                     rembourssement = montant * TAUX_50_POUR_CENT;
 
                     if (rembourssement > 50) {
 
-                        rembourssement = 50.0;
+                        rembourssement = 50.00;
+                    }
+                }else if (numSoin == 0) {
+                    rembourssement = montant * TAUX_50_POUR_CENT;
+
+                    if (rembourssement > 50) {
+
+                        rembourssement = 40.00;
                     }
 
                 } else if ((numSoin >= 300 && numSoin <= 399)) {
 
                     rembourssement = montant * TAUX_50_POUR_CENT;
 
-                } else if (numSoin == 0) {
-                    rembourssement = montant * TAUX_50_POUR_CENT;
-
-                    if (rembourssement > 40) {
-
-                        rembourssement = 40.0;
-                    }
+                
                 } else if (numSoin == 200) {
 
                     rembourssement = montant;
 
                     if (rembourssement > 70) {
 
-                        rembourssement = 70.0;
+                        rembourssement = 70.00;
                     }
 
                 } else if (numSoin == 400) {
 
-                    rembourssement = montant * TAUX_0_POUR_CENT;
+                    rembourssement = 0.00;
 
                 } else if (numSoin == 600) {
 
-                    rembourssement = montant * TAUX_100_POUR_CENT;
+                    rembourssement = montant;
 
                 } else {
 
@@ -439,56 +446,55 @@ public static boolean validerLesSoins(JSONObject objet, String mois) {
 
                 if (numSoin == 200 || numSoin == 600) {
 
-                    rembourssement = montant * TAUX_100_POUR_CENT;
+                    rembourssement = montant;
 
                     if (rembourssement > 100) {
 
-                        rembourssement = 100.0;
+                        rembourssement = 100.00;
                     }
 
                 } else if ((numSoin >= 300 && numSoin <= 399)) {
 
-                    rembourssement = montant * TAUX_100_POUR_CENT;
+                    rembourssement = montant;
 
                 } else if (numSoin == 100 || numSoin == 500) {
 
-                    rembourssement = montant * TAUX_100_POUR_CENT;
+                    rembourssement = montant;
 
                     if (rembourssement > 75) {
 
-                        rembourssement = 75.0;
+                        rembourssement = 75.00;
                     }
                 } else if (numSoin == 0) {
 
-                    rembourssement = montant * TAUX_100_POUR_CENT;
+                    rembourssement = montant;
 
                     if (rembourssement > 85) {
 
-                        rembourssement = 85.0;
+                        rembourssement = 85.00;
                     }
 
                 } else if (numSoin == 400) {
 
-                    rembourssement = montant * TAUX_100_POUR_CENT;
+                    rembourssement = montant;
 
                     if (rembourssement > 65) {
 
-                        rembourssement = 65.0;
+                        rembourssement = 65.00;
                     }
 
                 } else if (numSoin == 700) {
 
-                    rembourssement = montant * TAUX_100_POUR_CENT;
+                    rembourssement = montant;
 
                     if (rembourssement > 90) {
 
-                        rembourssement = 90.0;
+                        rembourssement = 90.00;
                     }
 
                 }
                 break;
         }
-
         return rembourssement;
     }
 
