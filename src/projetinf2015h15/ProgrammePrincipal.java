@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
-import static projetinf2015h15.GestionAssurance.*;
+import static projetinf2015h15.GestionDesFichiers.*;
 
 
 /**
@@ -41,22 +41,22 @@ public class ProgrammePrincipal {
         String mois = "";
         Double leRembourssement;
         try {
-            objet = formaterObjet(fichierEntree);
-            numClient = getNumeroClient(objet);
-            contrat = getCategorieContrat(objet);
-            mois = getMois(objet);
+            objet = GestionDesFichiers.formaterObjet(fichierEntree);
+            numClient = GestionDesOjetsJson.getNumeroClient(objet);
+            contrat = GestionDesOjetsJson.getCategorieContrat(objet);
+            mois = GestionDesOjetsJson.getMois(objet);
         } catch (JSONException e) {
             objet = null;
         }
-        if (objet != null && validerNumeroClient(numClient) && validerContrat(contrat) && validerFormatMois(mois) && validerLesSoins(objet, mois)) {
-            List<JSONObject> listeReclamation = listerLesReclamations(objet);
+        if (objet != null && GestionDesValidations.validerNumeroClient(numClient) && GestionDesValidations.validerContrat(contrat) && GestionDesValidations.validerFormatMois(mois) && GestionDesValidations.validerLesSoins(objet, mois)) {
+            List<JSONObject> listeReclamation = GestionDesOjetsJson.listerLesReclamations(objet);
             for (JSONObject uneReclamation : listeReclamation) {
                 int numSoin = uneReclamation.getInt("soin");
                 String chaineMontant = uneReclamation.getString("montant");
                 int indiceFin = chaineMontant.trim().length();
                 Double montant = Double.parseDouble(chaineMontant.substring(0, indiceFin - 1));
-                leRembourssement = appliquerLesContrat(contrat, montant, numSoin);
-                modifierLeSoin(leRembourssement, uneReclamation);
+                leRembourssement = GestionDesCalculs.appliquerLesContrat(contrat, montant, numSoin);
+                GestionDesOjetsJson.modifierLeSoin(leRembourssement, uneReclamation);
             }
             String objetJson = creationFichierSortie(numClient, contrat, mois, listeReclamation);
             ecrireFichierSurDisque(fichierSortie, objetJson);
