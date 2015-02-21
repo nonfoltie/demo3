@@ -284,17 +284,12 @@ public class GestionAssurance {
      * @return vrai si le montant est valide. Sinon, faux.
      */
     public static boolean validerMontant(String montant) {
-
         boolean montantEstValide = false;
-
         if (montant != null && montant.trim().charAt(montant.trim().length() - 1) == '$') {
-
             try {
                 Double.parseDouble(montant.trim().substring(0, montant.trim().length() - 1));
                 montantEstValide = true;
-
             } catch (NumberFormatException e) {
-
                 montantEstValide = false;
             }
         }
@@ -531,35 +526,5 @@ public static boolean validerLesSoins(JSONObject objet, String mois) {
         return objetJson.toString();
     }
 
-    public static void traitementReclamations(String fichierEntree, String fichierSortie) throws NumberFormatException, IOException {
-        JSONObject objet;
-        String numClient = "";
-        String contrat = "";
-        String mois = "";
-        Double leRembourssement;
-        try {
-            objet = formaterObjet(fichierEntree);
-            numClient = getNumeroClient(objet);
-            contrat = getCategorieContrat(objet);
-            mois = getMois(objet);
-        } catch (JSONException e) {
-            objet = null;
-        }
-        if (objet != null && validerNumeroClient(numClient) && validerContrat(contrat) && validerFormatMois(mois) && validerLesSoins(objet, mois)) {
-            List<JSONObject> listeReclamation = listerLesReclamations(objet);
-            for (JSONObject uneReclamation : listeReclamation) {
-                int numSoin = uneReclamation.getInt("soin");
-                String chaineMontant = uneReclamation.getString("montant");
-                int indiceFin = chaineMontant.trim().length();
-                Double montant = Double.parseDouble(chaineMontant.substring(0, indiceFin - 1));
-                leRembourssement = appliquerLesContrat(contrat, montant, numSoin);
-                modifierLeSoin(leRembourssement, uneReclamation);
-            }
-            String objetJson = creationFichierSortie(numClient, contrat, mois, listeReclamation);
-            ecrireFichierSurDisque(fichierSortie, objetJson);
-            System.out.println(objetJson);
-        } else {
-            System.out.println("Données invalides");
-        }
-    }
+    
     }
