@@ -1,24 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package projetinf2015h15;
 
-/**
- *
- * @author sergedelil
- */
+
 public class GestionDesCalculs {
 
-    /**
-     *
-     * @author Groupe 15.
-     * @param contrat
-     * @param montant
-     * @param numSoin
-     * @return le montant du rembourcement
-     */
+    
+    public static Double calculerRembourssementTotal() {
+        
+        return 0.0;
+    }
+    
     public static Double appliquerLesContrat(String contrat, Double montant, int numSoin) {
         Double rembourssement = 0.0;
         final double TAUX_25_POUR_CENT = 0.25;

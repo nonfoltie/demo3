@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package projetinf2015h15;
 
 import java.text.DecimalFormat;
@@ -13,18 +9,8 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
-/**
- *
- * @author sergedelil
- */
 public class GestionDesOjetsJson {
 
-    /**
-     *
-     * @author Groupe 15
-     * @param objActuel
-     * @return la catégorie du contrat.
-     */
     public static String getCategorieContrat(JSONObject objActuel) {
         String leContrat = null;
         if (objActuel != null) {
@@ -33,12 +19,6 @@ public class GestionDesOjetsJson {
         return leContrat;
     }
 
-    /**
-     *
-     * @author Groupe 15
-     * @param objActuel
-     * @return le numero du client.
-     */
     public static String getNumeroClient(JSONObject objActuel) {
         String numeroClient = null;
         if (objActuel != null) {
@@ -47,17 +27,11 @@ public class GestionDesOjetsJson {
         return numeroClient;
     }
 
-    /**
-     *
-     * @author Groupe 15.
-     * @param rembourssement
-     * @param uneReclamation
-     */
-    public static void modifierLeSoin(Double rembourssement, JSONObject uneReclamation) {
+    public static void modifierLeSoin(Double remboursement, JSONObject uneReclamation) {
         DecimalFormatSymbols dfs = new DecimalFormatSymbols();
         dfs.setDecimalSeparator('.');
         DecimalFormat df = new DecimalFormat("0.00", dfs);
-        String leMontant = df.format(rembourssement) + "$";
+        String leMontant = df.format(remboursement) + "$";
         uneReclamation.discard("montant");
         uneReclamation.accumulate("montant", leMontant);
     }
@@ -70,12 +44,6 @@ public class GestionDesOjetsJson {
         return leDossier;
     }
 
-    /**
-     *
-     * @author Groupe 15
-     * @param objetJson
-     * @return la liste des soins
-     */
     public static List<JSONObject> listerLesReclamations(JSONObject objetJson) {
         List<JSONObject> listeReclamation = null;
         if (objetJson != null) {
@@ -90,12 +58,6 @@ public class GestionDesOjetsJson {
         return listeReclamation;
     }
 
-    /**
-     *
-     * @author Groupe 15
-     * @param objActuel
-     * @return le mois
-     */
     public static String getMois(JSONObject objActuel) {
         String leMois = null;
         if (objActuel != null) {

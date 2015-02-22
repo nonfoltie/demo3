@@ -1,27 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package projetinf2015h15;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
-/**
- *
- * @author sergedelil
- */
 public class GestionDesValidations {
 
-    /**
-     *
-     * @author sergedelil
-     *
-     * @param numSoin
-     * @return vrai si le numéro du soin est valide. Sinon, faux.
-     */
+    
     public static boolean validerNumeroSoin(int numSoin) {
         boolean reponse = false;
         if ((numSoin == 0) || (numSoin == 100) || (numSoin == 200) || (numSoin == 400) || (numSoin >= 300 && numSoin <= 399) || (numSoin == 500) || (numSoin == 600) || (numSoin == 700)) {
@@ -30,13 +16,6 @@ public class GestionDesValidations {
         return reponse;
     }
 
-    /**
-     *
-     * @author Groupe 15.
-     * @param objet
-     * @param mois
-     * @return vrai si les soins sont valides. Sinon, faux.
-     */
     public static boolean validerLesSoins(JSONObject objet, String mois) {
         boolean soinsValide = false;
         int compteurSoins = 0;
@@ -54,11 +33,6 @@ public class GestionDesValidations {
         return soinsValide;
     }
 
-    /**
-     * @author Groupe 15.
-     * @param contrat
-     * @return vrai si le contrat est valide. Sinon, faux.
-     */
     public static boolean validerContrat(String contrat) {
         boolean reponse = false;
         if (contrat != null && (contrat.equals("A") || contrat.equals("B") || contrat.equals("C") || contrat.equals("D"))) {
@@ -67,11 +41,6 @@ public class GestionDesValidations {
         return reponse;
     }
 
-    /**
-     * @author Groupe 15
-     * @param numero
-     * @return vrai si le numéro du client est valide. Sinon, faux.
-     */
     public static boolean validerNumeroClient(String numero) {
         boolean reponse = false;
         int i = 0;
@@ -86,11 +55,6 @@ public class GestionDesValidations {
         return reponse;
     }
 
-    /**
-     * @author Groupe 15
-     * @param mois
-     * @return vrai si le format du mois est valide. Sinon, faux.
-     */
     public static boolean validerFormatMois(String mois) {
         boolean reponse = false;
         final int ANNEE_MAX = 2015;
@@ -115,12 +79,6 @@ public class GestionDesValidations {
         return reponse;
     }
 
-    /**
-     *
-     * @author Groupe 15.
-     * @param montant
-     * @return vrai si le montant est valide. Sinon, faux.
-     */
     public static boolean validerMontant(String montant) {
         boolean montantEstValide = false;
         if (montant != null && montant.trim().charAt(montant.trim().length() - 1) == '$') {
@@ -134,13 +92,6 @@ public class GestionDesValidations {
         return montantEstValide;
     }
 
-    /**
-     *
-     * @author Groupe 15.
-     * @param date
-     * @param mois
-     * @return retourne vrai si la date est valide, sinon, faux.
-     */
     public static boolean validerLaDate(String date, String mois) {
         boolean reponse = false;
         boolean valide;

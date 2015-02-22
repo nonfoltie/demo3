@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package projetinf2015h15;
 
 import java.io.IOException;
@@ -12,16 +8,9 @@ import net.sf.json.JSONObject;
 import static projetinf2015h15.GestionDesFichiers.*;
 
 
-/**
- *
- * @author Groupe 15
- */
+
 public class ProgrammePrincipal {
     
-    /**
-     * @param args the command line arguments
-     * @throws java.io.IOException
-     */
     public static void main(String[] args) throws IOException {
         
         if(args.length != 2){
@@ -34,7 +23,9 @@ public class ProgrammePrincipal {
         traitementReclamations(fichierEntree, fichierSortie);
     }
     
-    private static void traitementReclamations(String fichierEntree, String fichierSortie) throws NumberFormatException, IOException {
+    
+    private static void traitementReclamations(String fichierEntree, String fichierSortie) 
+            throws NumberFormatException, IOException {
         JSONObject objet;
         String numClient = "";
         String contrat = "";
