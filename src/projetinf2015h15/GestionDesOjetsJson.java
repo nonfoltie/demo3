@@ -66,5 +66,10 @@ public class GestionDesOjetsJson {
         return leMois;
     }
 
-    
+    public static String creationMessageJson(String message) {
+        JSONObject objetJson = new JSONObject();
+        objetJson.accumulate("message", message);
+        return objetJson.toString();
+    }
+   
 }
