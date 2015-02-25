@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
@@ -53,11 +54,20 @@ public class GestionDesFichiers {
         return objetJson.toString();
     }
 
-    public static JSONObject formaterObjet(String fichierEntree) throws IOException {
-        String leTexte = GestionDesFichiers.chargerFichier(fichierEntree);
+    public static JSONObject formaterObjet(String texteJson) throws IOException {
         JSONObject objActuel = null;
-        if (leTexte != null) {
-            objActuel = (JSONObject) JSONSerializer.toJSON(leTexte);
+
+        if (texteJson.trim().length() != 0) {
+            
+            try{
+                objActuel = (JSONObject) JSONSerializer.toJSON(texteJson);
+            }catch (JSONException e){
+                String messageSortie = "Le fichier JSON n'est pas valide.";
+                gererErreur(messageSortie);
+            }
+        }else {
+            String messageSortie = "Le fichier est vide.";
+            gererErreur(messageSortie);
         }
         return objActuel;
     }

@@ -1,6 +1,7 @@
 
 package projetinf2015h15;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
@@ -70,6 +71,13 @@ public class GestionDesOjetsJson {
         JSONObject objetJson = new JSONObject();
         objetJson.accumulate("message", message);
         return objetJson.toString();
+    }
+    public static void validerLesProprietesJson(JSONObject objet) throws IOException {
+    
+    }
+    
+    public static void validerProprietesReclamation(String reclamation) 
+            throws IOException {
     }
    
 }
