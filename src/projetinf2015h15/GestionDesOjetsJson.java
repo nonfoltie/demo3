@@ -72,12 +72,4 @@ public class GestionDesOjetsJson {
         objetJson.accumulate("message", message);
         return objetJson.toString();
     }
-    public static void validerLesProprietesJson(JSONObject objet) throws IOException {
-    
-    }
-    
-    public static void validerProprietesReclamation(String reclamation) 
-            throws IOException {
-    }
-   
 }

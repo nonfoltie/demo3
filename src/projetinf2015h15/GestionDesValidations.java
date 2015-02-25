@@ -1,6 +1,7 @@
 
 package projetinf2015h15;
 
+import java.io.IOException;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
@@ -106,6 +107,12 @@ public class GestionDesValidations {
             }
         }
         return reponse;
+    }
+
+    public static void validerLesProprietesJson(JSONObject objet) throws IOException {
+    }
+
+    public static void validerProprietesReclamation(String reclamation) throws IOException {
     }
     
 }
