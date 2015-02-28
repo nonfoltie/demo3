@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.util.List;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
+import static projetinf2015h15.GestionDesCalculs.*;
 import static projetinf2015h15.GestionDesFichiers.*;
+import static projetinf2015h15.GestionDesOjetsJson.*;
+import static projetinf2015h15.GestionDesValidations.*;
 
 
 
@@ -14,8 +17,10 @@ public class ProgrammePrincipal {
     public static void main(String[] args) throws IOException {
         
         if(args.length != 2){
-            System.out.println("Données invalides");
-            System.exit(0);
+            
+            String messageSortie = "Argument(s) manquant(s)";
+            System.out.println(messageSortie);
+            gererErreur(messageSortie);
         }
         
         String fichierEntree = args[0];
@@ -25,36 +30,35 @@ public class ProgrammePrincipal {
     
     
     private static void traitementReclamations(String fichierEntree, String fichierSortie) 
-            throws NumberFormatException, IOException {
-        JSONObject objet;
-        String numClient = "";
-        String contrat = "";
-        String mois = "";
+            throws IOException {
+        JSONObject objet = testerValiditerDeLobjetJson(fichierEntree);
+        List<JSONObject> listeReclamation = calculerRemboursementDuSoin(objet);
+        String totalrembourser = additionnerLesRemboursements(listeReclamation);
+        String objetJson = creationFichierSortie(objet, listeReclamation, totalrembourser);
+        ecrireFichierSurDisque(fichierSortie, objetJson);
+        System.out.println(objetJson);
+    }
+
+    private static JSONObject testerValiditerDeLobjetJson(String fichierEntree) 
+            throws IOException, JSONException {
+        JSONObject objet = formaterObjet(chargerFichier(fichierEntree));
+        validerLesProprietesJson(objet);
+        validerProprietesReclamation(objet.getString("reclamations"));
+        validerNumeroDossier(getNumeroDossier(objet));
+        validerFormatMois(getMois(objet));
+        validerLesSoins(objet,getMois(objet));
+        return objet;
+    }
+    
+    private static List<JSONObject> calculerRemboursementDuSoin(JSONObject objet) 
+            throws IOException {
         Double leRembourssement;
-        try {
-            objet = GestionDesFichiers.formaterObjet(fichierEntree);
-            numClient = GestionDesOjetsJson.getNumeroClient(objet);
-            contrat = GestionDesOjetsJson.getCategorieContrat(objet);
-            mois = GestionDesOjetsJson.getMois(objet);
-        } catch (JSONException e) {
-            objet = null;
+        List<JSONObject> listeReclamation = listerLesReclamations(objet);
+        for (JSONObject uneReclamation : listeReclamation) {
+            leRembourssement = appliquerLesContrat(uneReclamation, getNumeroDossier(objet));
+            modifierLeSoin(leRembourssement, uneReclamation);
         }
-        if (objet != null && GestionDesValidations.validerNumeroClient(numClient) && GestionDesValidations.validerContrat(contrat) && GestionDesValidations.validerFormatMois(mois) && GestionDesValidations.validerLesSoins(objet, mois)) {
-            List<JSONObject> listeReclamation = GestionDesOjetsJson.listerLesReclamations(objet);
-            for (JSONObject uneReclamation : listeReclamation) {
-                int numSoin = uneReclamation.getInt("soin");
-                String chaineMontant = uneReclamation.getString("montant");
-                int indiceFin = chaineMontant.trim().length();
-                Double montant = Double.parseDouble(chaineMontant.substring(0, indiceFin - 1));
-                leRembourssement = GestionDesCalculs.appliquerLesContrat(contrat, montant, numSoin);
-                GestionDesOjetsJson.modifierLeSoin(leRembourssement, uneReclamation);
-            }
-            String objetJson = creationFichierSortie(numClient, contrat, mois, listeReclamation);
-            ecrireFichierSurDisque(fichierSortie, objetJson);
-            System.out.println(objetJson);
-        } else {
-            System.out.println("Données invalides");
-        }
+        return listeReclamation;
     }
 
 }
