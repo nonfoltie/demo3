@@ -67,4 +67,6 @@ public class GestionDesOjetsJson {
         objetJson.accumulate("message", message);
         return objetJson.toString();
     }
+    
+    //test
 }
