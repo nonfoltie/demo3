@@ -12,9 +12,9 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
+import static projetinf2015h15.GestionDesOjetsJson.*;
+
 
 public class GestionDesFichiers {
 
@@ -41,37 +41,18 @@ public class GestionDesFichiers {
         }
     }
 
-    public static String creationFichierSortie(String numClient, String contrat,
-            String mois, List<JSONObject> liste) {
+    public static String creationFichierSortie(JSONObject objet, 
+            List<JSONObject> liste, String total) throws IOException {
 
         JSONObject objetJson = new JSONObject();
-
-        objetJson.accumulate("client", numClient);
-        objetJson.accumulate("contrat", contrat);
-        objetJson.accumulate("mois", mois);
+        objetJson.accumulate("dossier", getNumeroDossier(objet));
+        objetJson.accumulate("mois", getMois(objet));
         objetJson.accumulate("reclamations", liste);
+        objetJson.accumulate("total", total);
         
         return objetJson.toString();
     }
 
-    public static JSONObject formaterObjet(String texteJson) throws IOException {
-        JSONObject objActuel = null;
-
-        if (texteJson.trim().length() != 0) {
-            
-            try{
-                objActuel = (JSONObject) JSONSerializer.toJSON(texteJson);
-            }catch (JSONException e){
-                String messageSortie = "Le fichier JSON n'est pas valide.";
-                gererErreur(messageSortie);
-            }
-        }else {
-            String messageSortie = "Le fichier est vide.";
-            gererErreur(messageSortie);
-        }
-        return objActuel;
-    }
-    
     public static void gererErreur(String message) throws IOException {
         String fichier = "/Users/sergedelil/output.json";
         System.out.println(message);

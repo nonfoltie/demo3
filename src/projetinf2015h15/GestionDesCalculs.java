@@ -1,7 +1,12 @@
 
 package projetinf2015h15;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.List;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
 
 
 public class GestionDesCalculs {
@@ -167,5 +172,22 @@ public class GestionDesCalculs {
             remboursement = montant * 0.4;
         }
         return remboursement;
+    }
+    
+    public static String additionnerLesRemboursements(List<JSONObject> listeReclamation){
+        DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+        dfs.setDecimalSeparator('.');
+        DecimalFormat df = new DecimalFormat("0.00" , dfs); 
+        
+        JSONArray tableauReclamation = (JSONArray) JSONSerializer.toJSON(listeReclamation);
+        Double totalRemboursement = 0.0;
+        for (int i = 0 ; i < tableauReclamation.size() ; i++){
+            JSONObject soinCourant = tableauReclamation.getJSONObject(i);
+            String montantantRembourse = soinCourant.getString("montant");
+            int tailleDuMontant = montantantRembourse.trim().length();
+            Double montant = Double.parseDouble(montantantRembourse.substring(0, tailleDuMontant- 1));
+            totalRemboursement  = totalRemboursement + montant;
+        }
+        return df.format(totalRemboursement);
     }
 }
