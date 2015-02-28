@@ -100,20 +100,12 @@ public class GestionDesOjetsJson {
             gererErreur(messageSortie);
         }
     }
-    public static String getCategorieContrat(JSONObject objActuel) {
-        String leContrat = null;
-        if (objActuel != null) {
-            leContrat = objActuel.getString("contrat");
-        }
-        return leContrat;
+    public static String getNumeroDossier(JSONObject objActuel) throws IOException {
+        return objActuel.getString("dossier");
     }
-
-    public static String getNumeroClient(JSONObject objActuel) {
-        String numeroClient = null;
-        if (objActuel != null) {
-            numeroClient = objActuel.getString("client");
-        }
-        return numeroClient;
+    
+    public static String getMois(JSONObject objActuel) throws IOException {
+        return objActuel.getString("mois");
     }
 
     public static void modifierLeSoin(Double remboursement, JSONObject uneReclamation) {
