@@ -54,7 +54,7 @@ public class GestionDesFichiers {
     }
 
     public static void gererErreur(String message) throws IOException {
-        String fichier = "/Users/sergedelil/output.json";
+        String fichier = "resources/output.json";
         System.out.println(message);
         ecrireFichierSurDisque(fichier, GestionDesOjetsJson.creationMessageJson(message));
         System.exit(0);
