@@ -11,7 +11,9 @@ public class GestionDesValidations {
     
     public static boolean validerNumeroSoin(int numSoin) {
         boolean reponse = false;
-        if ((numSoin == 0) || (numSoin == 100) || (numSoin == 200) || (numSoin == 400) || (numSoin >= 300 && numSoin <= 399) || (numSoin == 500) || (numSoin == 600) || (numSoin == 700)) {
+        if ((numSoin == 0) || (numSoin == 100) || (numSoin == 200) || (numSoin == 400) 
+                || (numSoin >= 300 && numSoin <= 399) || (numSoin == 500) 
+                || (numSoin == 600) || (numSoin == 700)) {
             reponse = true;
         }
         return reponse;

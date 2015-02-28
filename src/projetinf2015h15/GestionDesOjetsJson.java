@@ -7,10 +7,28 @@ import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
+import static projetinf2015h15.GestionDesFichiers.*;
 
 public class GestionDesOjetsJson {
+    
+    public static JSONObject formaterObjet(String texteJson) throws JSONException, IOException {
+        JSONObject objActuel = null;
+        if (texteJson.trim().length() != 0) {
+            try{
+                objActuel = (JSONObject) JSONSerializer.toJSON(texteJson);
+            }catch (JSONException e){
+                String messageSortie = "Le fichier JSON n'est pas valide.";
+                gererErreur(messageSortie);
+            }
+        }else {
+            String messageSortie = "Le fichier est vide.";
+            gererErreur(messageSortie);
+        }
+        return objActuel;
+    }
 
     public static String getCategorieContrat(JSONObject objActuel) {
         String leContrat = null;
