@@ -97,6 +97,44 @@ public class GestionDesValidations {
         }
         return reponse;
     }
+    
+    
+    
+     /**
+     *
+     * @author Groupe 15
+     * retourne la liste des dates des soins.
+     * @param date
+     * @return
+    */
+     public static boolean validerLaDate(String date) throws IOException{
+         
+        boolean reponse = false;
+        
+       if(date != null && date.length() >= 7){
+          
+           reponse = validerFormatMois(date.trim().substring(0,7));
+       }
+       
+       return reponse;
+    } 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     public static boolean validerMontant(String montant) throws IOException {
         boolean montantEstValide = false;

@@ -178,11 +178,7 @@ public class GestionAssurance {
      * @param mois
      * @return vrai si la date est valide. Sinon, faux.
     */
-     public static boolean validerFormatMois(String mois){
-         
-      //  
-       return false;
-    }
+    
     
     /**
      * @author Groupe 15
@@ -203,51 +199,9 @@ public class GestionAssurance {
        return reponse;
     }        
      
-     /**
-     *
-     * @author Groupe 15
-     * retourne la liste des dates des soins.
-     * @param date
-     * @return
-    */
-     public static boolean validerLaDate(String date){
-         
-        boolean reponse = false;
-        
-       if(date != null && date.length() >= 7){
-          
-           reponse = validerFormatMois(date.trim().substring(0,7));
-       }
-       
-       return reponse;
-    } 
+    
      
-    /**
-     *
-     * @author Groupe 15
-     * retourne la liste des dates des soins.
-     * @param montant
-     * @return
-    */ 
-    public static boolean validerMontant(String montant){
-        
-        
-        return false; 
-    } 
-    /**
-     *
-     * @author Groupe 15
-     * retourne le montant du remboursement.
-     * @param objet
-     * @return
-    */
-    public static boolean validerLesSoins(JSONObject objet){
-        
-        
-        return false;
-    
-    } 
-    
+      
     /**
      *
      * @author Groupe 15
