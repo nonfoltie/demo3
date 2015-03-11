@@ -1,14 +1,18 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "dossier": "B100323",
     
 =======
     "dossier": "E100323",
 >>>>>>> 111e52e... Refactoring
+=======
+    "dossier": "A100323",
+>>>>>>> 21c43ad... le fichier d'entrée
     "mois": "2015-01",
     "reclamations": [
         {
-            "soin": 175,
+            "soin": 100,
             "date": "2015-01-11",
             "montant": "234.00$"
 <<<<<<< HEAD

@@ -29,9 +29,7 @@ public class GestionDesValidations {
         
         return compteurSoins == tableauReclamation.size();
     }
-
-<<<<<<< HEAD
-=======
+    
     private static int validerSoinDateMontant(JSONObject objetCourant, String mois, 
             int compteurSoins) throws IOException {
         if (validerNumeroSoin(objetCourant.getString("soin"))
@@ -42,7 +40,7 @@ public class GestionDesValidations {
         return compteurSoins;
     }
 
->>>>>>> 111e52e... Refactoring
+
     public static boolean validerNumeroDossier(String numero) throws IOException {
         
         boolean reponse = false;
