@@ -30,6 +30,19 @@ public class GestionDesValidations {
         return compteurSoins == tableauReclamation.size();
     }
 
+<<<<<<< HEAD
+=======
+    private static int validerSoinDateMontant(JSONObject objetCourant, String mois, 
+            int compteurSoins) throws IOException {
+        if (validerNumeroSoin(objetCourant.getString("soin"))
+                && validerLaDate(objetCourant.getString("date"), mois)
+                && validerMontant(objetCourant.getString("montant"))) {
+            compteurSoins++;
+        }
+        return compteurSoins;
+    }
+
+>>>>>>> 111e52e... Refactoring
     public static boolean validerNumeroDossier(String numero) throws IOException {
         
         boolean reponse = false;
@@ -51,21 +64,27 @@ public class GestionDesValidations {
         if (mois != null && mois.matches("\\d{4}-(0[1-9]|1[0-2])")) {
             reponse = true;
         }else {
-            String messageSortie = "Le format du mois n'est pas valide.";
+            String messageSortie = "Le format ou la valeur du mois n'est pas valide.";
             gererErreur(messageSortie);
         }
         return reponse;
     }
     
-    public static boolean validerNumeroSoin(int numeroSoin) throws IOException {
+    public static boolean validerNumeroSoin(String numSoin) throws IOException {
         boolean reponse = false;
-        if ((numeroSoin == 0) || (numeroSoin == 100) || (numeroSoin == 200) 
+        try{
+            int numeroSoin = Integer.parseInt((numSoin).trim());
+            if ((numeroSoin == 0) || (numeroSoin == 100) || (numeroSoin == 200) 
                 || (numeroSoin== 400) || (numeroSoin >= 300 && numeroSoin <= 399) 
                 || (numeroSoin == 500) || (numeroSoin == 600) || (numeroSoin == 700)
                 || (numeroSoin == 150) || (numeroSoin == 175)) {
-            reponse = true;
-        }else {
-            String messageSortie = "Le numero du soin n'est pas valide.";
+                reponse = true;
+            }else {
+                String messageSortie = "Le numero d'un soin n'est pas valide.";
+                gererErreur(messageSortie);
+            }
+        }catch(NumberFormatException e){
+            String messageSortie = "Le numero d'un soin n'est pas valide.";
             gererErreur(messageSortie);
         }
         return reponse;
@@ -74,7 +93,7 @@ public class GestionDesValidations {
     public static boolean validerLaDate(String date, String mois) throws IOException {
         boolean reponse = identifierLaDateAuMoisEnCours(date, mois);
         if (reponse == false){
-                String messageSortie = "La date du soin n'est pas valide.";
+                String messageSortie = "La date d'un soin n'est pas valide.";
                 gererErreur(messageSortie);
         }
         return reponse;
@@ -165,7 +184,7 @@ public class GestionDesValidations {
 
     private static void verifierNumeroSoin(JSONObject objetCourant) throws IOException {
         try {
-            objetCourant.getInt("soin");
+            objetCourant.getString("soin");
         } catch (JSONException e) {
             String messageSortie = "Le num\u00e9ro d'un soin est manquant.";
             gererErreur(messageSortie);

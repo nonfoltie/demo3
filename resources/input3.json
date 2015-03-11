@@ -1,12 +1,29 @@
 {
+<<<<<<< HEAD
     "dossier": "B100323",
     
+=======
+    "dossier": "E100323",
+>>>>>>> 111e52e... Refactoring
     "mois": "2015-01",
     "reclamations": [
         {
-            "soin": 100,
+            "soin": 175,
             "date": "2015-01-11",
             "montant": "234.00$"
+<<<<<<< HEAD
+=======
+        },
+        {
+            "soin": 150,
+            "date": "2015-01-13",
+            "montant": "90.00$"
+        },
+        {
+            "soin": 334,
+            "date": "2015-01-23",
+            "montant": "400.00$"
+>>>>>>> 111e52e... Refactoring
         }
     ]
 }
